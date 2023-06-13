@@ -17,6 +17,7 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Category</th>
+                    <th>Price</th>
                     <th>Status</th>
                 </tr>
             </thead>
@@ -27,6 +28,7 @@
                         <td><?= $product->id ?> </td>
                         <td><?= $product->name ?> </td>
                         <td><?= $product->category_id ?> </td>
+                        <td><?= $product->price ?> </td>
                         <td><?= $product->status ?> </td>
                     </tr>
                     <?php endforeach ?>
