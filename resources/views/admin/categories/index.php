@@ -26,6 +26,7 @@
                         <td><?= $category->id ?> </td>
                         <td><?= $category->name ?> </td>
                     </tr>
+                    
                     <?php endforeach ?>
                 </td>
             </tbody>
