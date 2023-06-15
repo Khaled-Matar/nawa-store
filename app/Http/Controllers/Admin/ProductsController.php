@@ -62,7 +62,7 @@ class ProductsController extends Controller
         $product->image = $request->input('image');
         $product->save();
         //prg : post redirect get
-        return redirect(route('products.index'));
+        return redirect()->route('products.index');
     }
 
     /**
@@ -78,7 +78,13 @@ class ProductsController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        // $product = Product::where('id', '=', $id)->first(); // return Model
+        $product = Product::findOrFail($id); //return Model Object or NUll
+        return view ('admin.products.edit',
+        [
+            'product' => $product,
+        ]);
+
     }
 
     /**
@@ -86,7 +92,16 @@ class ProductsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $product->name = $request->input('name');
+        $product->slug = $request->input('slug');
+        $product->description = $request->input('description');
+        $product->short_description = $request->input('short_description');
+        $product->price = $request->input('price');
+        $product->compare_price = $request->input('compare_price');
+        $product->image = $request->input('image');
+        $product->save();
+        return redirect()->route('products.index');
     }
 
     /**
@@ -94,6 +109,10 @@ class ProductsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Product::destroy($id);
+        // $product =Product::findOrFail($id);
+        // $product->delete();
+        // Product::where('id', '=', $id)->delete();
+        return redirect()->route('products.index');
     }
 }
