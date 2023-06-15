@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -44,7 +45,11 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        return view('admin.products.create');
+        $categories = Category::all();
+        return view('admin.products.create',[
+        'product' => new Product(),
+        'categries' => $categories,
+    ]);
     }
 
     /**
@@ -55,6 +60,7 @@ class ProductsController extends Controller
         $product = new Product();
         $product->name = $request->input('name');
         $product->slug = $request->input('slug');
+        $product->category_id = $request->input('category_id');
         $product->description = $request->input('description');
         $product->short_description = $request->input('short_description');
         $product->price = $request->input('price');
@@ -62,7 +68,10 @@ class ProductsController extends Controller
         $product->image = $request->input('image');
         $product->save();
         //prg : post redirect get
-        return redirect()->route('products.index');
+        // return redirect()->route('products.index');
+        return redirect()
+        ->route('products.index')
+        ->with('success',"Product ({$product->name}) Added");
     }
 
     /**
@@ -80,9 +89,11 @@ class ProductsController extends Controller
     {
         // $product = Product::where('id', '=', $id)->first(); // return Model
         $product = Product::findOrFail($id); //return Model Object or NUll
+        $categories = Category::findOrFail($id); //return Model Object or NUll
         return view ('admin.products.edit',
         [
             'product' => $product,
+            'categories' => $categories,
         ]);
 
     }
@@ -101,7 +112,8 @@ class ProductsController extends Controller
         $product->compare_price = $request->input('compare_price');
         $product->image = $request->input('image');
         $product->save();
-        return redirect()->route('products.index');
+        return redirect()->route('products.index')
+        ->with('success',"Product ({$product->name}) Updated");;
     }
 
     /**
@@ -109,10 +121,11 @@ class ProductsController extends Controller
      */
     public function destroy(string $id)
     {
-        Product::destroy($id);
-        // $product =Product::findOrFail($id);
-        // $product->delete();
         // Product::where('id', '=', $id)->delete();
-        return redirect()->route('products.index');
+        // Product::destroy($id);
+        $product =Product::findOrFail($id);
+        $product->delete();
+        return redirect()->route('products.index')
+        ->with('success',"Product ({$product->name}) deleted");;
     }
 }

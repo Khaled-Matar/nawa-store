@@ -2,6 +2,12 @@
 @section('content')
     <h2 class="mb-4 fs-3">{{ $title }}</h2>
     <a href="{{ route('products.create') }}" class="btn btn-sm btn-primary"> + Create Product</a>
+
+    @if (session()->has('success'))
+    <div class="alert alert-success">
+        {{ session('success')}}
+    </div>
+    @endif
     <table class="table">
         <thead>
             <tr>
@@ -26,7 +32,6 @@
                         <td>{{ $product->compare_price }} </td>
                         <td>{{ $product->status }} </td>
                         <td><a href="{{route('products.edit', $product->id)}}" class="btn btn-sm btn-outline-dark"><i class="far fa-edit"></i> Edit</a></td>
-                        {{-- <td><a href="{{route('products.edit', [$product->id, $product->name, 'action' => 'edit'])}}" class="btn btn-sm btn-outline-dark"><i class="far fa-edit"></i> Edit</a></td> --}}
                         <td>
                             <form action="{{route('products.destroy', $product->id)}}" method="POST">
                                 @csrf
