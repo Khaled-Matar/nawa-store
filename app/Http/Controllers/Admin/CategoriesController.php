@@ -37,7 +37,8 @@ class CategoriesController extends Controller
         $category = new Category();
         $category->name = $request->input('name');
         $category->save();
-        return redirect(route('categories.index'));
+        session()->flash('success', "Category ({$category->name}) Added");
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -54,10 +55,12 @@ class CategoriesController extends Controller
     public function edit(string $id)
     {
         $category = Category::findOrFail($id); //return Model Object or NUll
-        return view ('admin.categories.edit',
-        [
-            'category' => $category,
-        ]);
+        return view(
+            'admin.categories.edit',
+            [
+                'category' => $category,
+            ]
+        );
     }
 
     /**
@@ -68,8 +71,8 @@ class CategoriesController extends Controller
         $category = Category::findOrFail($id);
         $category->name = $request->input('name');
         $category->save();
-        return redirect()->route('categories.index')
-        ->with('success',"Category ({$category->name}) Updated");;
+        session()->flash('success', "Category ({$category->name}) Updated");
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -77,10 +80,11 @@ class CategoriesController extends Controller
      */
     public function destroy(string $id)
     {
-    //     Category::destroy($id);
-    //     return redirect()->route('categories.index')
-    $category =Category::findOrFail($id);
-    $category->delete()
-        ->with('success',"Category ({$category->name}) Deleted");
+        //  Category::destroy($id);
+        //  return redirect()->route('categories.index')
+        $category = Category::findOrFail($id);
+        $category->delete();
+        session()->flash('success', "Category ({$category->name}) Deleted");
+        return redirect()->route('categories.index');
     }
 }

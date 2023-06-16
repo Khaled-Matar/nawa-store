@@ -27,15 +27,12 @@ Route::get('/', function () {
 // Route::get('/admin/products/{id}/edit', [ProductsController::class, 'edit']);
 // Route::put('/admin/products/{id}', [ProductsController::class, 'update']);
 // Route::delete('/admin/products/{id}', [ProductsController::class, 'destroy']);
-           //     =====     // 
+//     =====     // 
 Route::resource('/admin/products', ProductsController::class);
 // ----------------------------------------------------------------------------------------------------------- //
 Route::resource('/admin/categories', CategoriesController::class);
 
 
 
-
-
-
-Route::get('/users',[UserController::class,'index']);
-Route::get('/users/{name}',[UserController::class,'show']);
+Route::get('/users', [UserController::class, 'index']);
+Route::get('/users/{name}', [UserController::class, 'show']);

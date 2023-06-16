@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class ProductsController extends Controller
 {
@@ -27,12 +27,12 @@ class ProductsController extends Controller
         // ])->get();  //return a Collection of std object = "array"
         // dd($products);
         // == //
-          // Select * FROM products,
-        $products = Product::leftJoin('categories','categories.id','=', 'products.category_id')
-        ->select([
-            'products.*',
-            'categories.name as category_name',
-        ])->get(); // Collection of Product Model
+        // Select * FROM products,
+        $products = Product::leftJoin('categories', 'categories.id', '=', 'products.category_id')
+            ->select([
+                'products.*',
+                'categories.name as category_name',
+            ])->get(); // Collection of Product Model
 
         return view('admin.products.index', [
             'title' => 'Products List',
@@ -46,10 +46,10 @@ class ProductsController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.products.create',[
-        'product' => new Product(),
-        'categries' => $categories,
-    ]);
+        return view('admin.products.create', [
+            'product' => new Product(),
+            'categries' => $categories,
+        ]);
     }
 
     /**
@@ -69,9 +69,8 @@ class ProductsController extends Controller
         $product->save();
         //prg : post redirect get
         // return redirect()->route('products.index');
-        return redirect()
-        ->route('products.index')
-        ->with('success',"Product ({$product->name}) Added");
+        session()->flash('success', "Product ({$product->name}) Added");
+        return redirect()->route('products.index');
     }
 
     /**
@@ -90,12 +89,13 @@ class ProductsController extends Controller
         // $product = Product::where('id', '=', $id)->first(); // return Model
         $product = Product::findOrFail($id); //return Model Object or NUll
         $categories = Category::findOrFail($id); //return Model Object or NUll
-        return view ('admin.products.edit',
-        [
-            'product' => $product,
-            'categories' => $categories,
-        ]);
-
+        return view(
+            'admin.products.edit',
+            [
+                'product' => $product,
+                'categories' => $categories,
+            ]
+        );
     }
 
     /**
@@ -112,8 +112,8 @@ class ProductsController extends Controller
         $product->compare_price = $request->input('compare_price');
         $product->image = $request->input('image');
         $product->save();
-        return redirect()->route('products.index')
-        ->with('success',"Product ({$product->name}) Updated");;
+        session()->flash('success', "Product ({$product->name}) Updated");
+        return redirect()->route('products.index');
     }
 
     /**
@@ -123,9 +123,9 @@ class ProductsController extends Controller
     {
         // Product::where('id', '=', $id)->delete();
         // Product::destroy($id);
-        $product =Product::findOrFail($id);
+        $product = Product::findOrFail($id);
         $product->delete();
-        return redirect()->route('products.index')
-        ->with('success',"Product ({$product->name}) deleted");;
+        session()->flash('success', "Product ({$product->name}) deleted");
+        return redirect()->route('products.index');
     }
 }

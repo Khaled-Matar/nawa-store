@@ -4,10 +4,19 @@
     <a href="{{ route('products.create') }}" class="btn btn-sm btn-primary"> + Create Product</a>
 
     @if (session()->has('success'))
-    <div class="alert alert-success">
-        {{ session('success')}}
-    </div>
+        <div id="success-message" class="alert alert-success">
+            {{ session('success') }}
+        </div>
     @endif
+    <script>
+        setTimeout(function() {
+            var successMessage = document.getElementById('success-message');
+            if (successMessage) {
+                successMessage.style.display = 'none';
+            }
+        }, 5000);
+    </script>
+
     <table class="table">
         <thead>
             <tr>
@@ -18,7 +27,7 @@
                 <th>Compare Price</th>
                 <th>Status</th>
                 <th>Edit</th>
-                <th>delete</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -31,12 +40,14 @@
                         <td>{{ $product->price }} </td>
                         <td>{{ $product->compare_price }} </td>
                         <td>{{ $product->status }} </td>
-                        <td><a href="{{route('products.edit', $product->id)}}" class="btn btn-sm btn-outline-dark"><i class="far fa-edit"></i> Edit</a></td>
+                        <td><a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-outline-dark"><i
+                                    class="far fa-edit"></i> Edit</a></td>
                         <td>
-                            <form action="{{route('products.destroy', $product->id)}}" method="POST">
+                            <form action="{{ route('products.destroy', $product->id) }}" method="POST">
                                 @csrf
                                 @method('delete')
-                                <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</button>
+                                <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i>
+                                    Delete</button>
                             </form>
                         </td>
                     </tr>

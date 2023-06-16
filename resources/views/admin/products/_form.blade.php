@@ -33,7 +33,7 @@
             placeholder="price">
     </div>
     <div class="form-floating mb-3">
-        <label for="compare_price">Price</label>
+        <label for="compare_price">Compare Price</label>
         <input type="number" class="form-control" id="compare_price" name="compare_price"
             value="{{ $product->compare_price }}" placeholder="compare_price">
     </div>
