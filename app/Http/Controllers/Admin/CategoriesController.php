@@ -37,8 +37,9 @@ class CategoriesController extends Controller
         $category = new Category();
         $category->name = $request->input('name');
         $category->save();
-        session()->flash('success', "Category ({$category->name}) Added");
-        return redirect()->route('categories.index');
+        
+        return redirect()->route('categories.index')
+        ->with('success', "Category ({$category->name}) Added");
     }
 
     /**
@@ -71,8 +72,8 @@ class CategoriesController extends Controller
         $category = Category::findOrFail($id);
         $category->name = $request->input('name');
         $category->save();
-        session()->flash('success', "Category ({$category->name}) Updated");
-        return redirect()->route('categories.index');
+        return redirect()->route('categories.index')
+        ->with('success', "Category ({$category->name}) Updated");
     }
 
     /**
@@ -84,7 +85,7 @@ class CategoriesController extends Controller
         //  return redirect()->route('categories.index')
         $category = Category::findOrFail($id);
         $category->delete();
-        session()->flash('success', "Category ({$category->name}) Deleted");
-        return redirect()->route('categories.index');
+        return redirect()->route('categories.index')
+        ->with('success', "Category ({$category->name}) Deleted");
     }
 }

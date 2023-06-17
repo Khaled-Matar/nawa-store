@@ -69,8 +69,8 @@ class ProductsController extends Controller
         $product->save();
         //prg : post redirect get
         // return redirect()->route('products.index');
-        session()->flash('success', "Product ({$product->name}) Added");
-        return redirect()->route('products.index');
+        return redirect()->route('products.index')
+        ->with('success', "Product ({$product->name}) Added");
     }
 
     /**
@@ -112,8 +112,8 @@ class ProductsController extends Controller
         $product->compare_price = $request->input('compare_price');
         $product->image = $request->input('image');
         $product->save();
-        session()->flash('success', "Product ({$product->name}) Updated");
-        return redirect()->route('products.index');
+        return redirect()->route('products.index')
+        ->with('success', "Product ({$product->name}) Updated");
     }
 
     /**
@@ -125,7 +125,7 @@ class ProductsController extends Controller
         // Product::destroy($id);
         $product = Product::findOrFail($id);
         $product->delete();
-        session()->flash('success', "Product ({$product->name}) deleted");
-        return redirect()->route('products.index');
+        return redirect()->route('products.index')
+        ->with('success', "Product ({$product->name}) deleted");
     }
 }
