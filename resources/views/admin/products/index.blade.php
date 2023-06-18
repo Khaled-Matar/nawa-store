@@ -40,8 +40,8 @@
                         <td>{{ $product->price }} </td>
                         <td>{{ $product->compare_price }} </td>
                         <td>{{ $product->status }} </td>
-                        <td><a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-outline-dark"><i
-                                    class="far fa-edit"></i> Edit</a></td>
+                        <td><a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-outline-dark">
+                                <i class="far fa-edit"></i>Edit</a></td>
                         <td>
                             <form action="{{ route('products.destroy', $product->id) }}" method="POST">
                                 @csrf

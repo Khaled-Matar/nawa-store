@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductRequest;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -59,21 +60,12 @@ class ProductsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        $rules = [
-            'name' => 'required|max:255|min:3',
-            'slug' => 'required|unique:products,slug',
-            'category_id' => 'nullable|int|exists:categories,id',
-            'description' => 'nullable|string',
-            'short_description' => 'string|max:500',
-            'price' => 'required|numeric|min:0',
-            'compare_price' => 'nullable|numeric|min:0|gt:price',       //gt = greater than  // gte = greater than or equal =
-            'image' => 'nullable|image|dimensions:min_width=400,min_height=300,|max:500',   // 500KB  // 1024KB = 1MB
-            'status' => 'required|in:active,draft,archived',
-            // 'image' => 'file|mimetypes:image/png,image/jpg,image/jpeg,image/gif',   /// more secure than mimes and it used for imaes/files/videos
-        ];
-        $request->validate($rules);
+        // $rules = $this->rules();
+        // $messages = $this->messages();
+        // $request->validate($rules, $messages);
+
         $product = new Product();
         $product->name = $request->input('name');
         $product->slug = $request->input('slug');
@@ -124,21 +116,12 @@ class ProductsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ProductRequest $request, string $id)
     {
-        $rules = [
-            'name' => 'required|max:255|min:3',
-            'slug' => "required|unique:products,slug,$id",
-            'category_id' => 'nullable|int|exists:categories,id',
-            'description' => 'nullable|string',
-            'short_description' => 'string|max:500',
-            'price' => 'required|numeric|min:0',
-            'compare_price' => 'nullable|numeric|min:0|gt:price',       //gt = greater than  // gte = greater than or equal =
-            'image' => 'nullable|image|dimensions:min_width=400,min_height=300,|max:500',   // 500KB  // 1024KB = 1MB
-            'status' => 'required|in:active,draft,archived',
-            // 'image' => 'file|mimetypes:image/png,image/jpg,image/jpeg,image/gif',   /// more secure than mimes and it used for imaes/files/videos
-        ];
-        $request->validate($rules);
+        // $rules = $this->rules($id);
+        // $messages = $this->messages();
+        // $request->validate($rules, $messages);
+
         $product = Product::findOrFail($id);
         $product->name = $request->input('name');
         $product->slug = $request->input('slug');
@@ -165,4 +148,28 @@ class ProductsController extends Controller
         return redirect()->route('products.index')
             ->with('success', "Product ({$product->name}) deleted");
     }
+
+    // protected function messages()
+    // {
+    //     return[
+    //         'required' => ':attribute field is required!!',           // :attribute = field name
+    //         'unquie' => 'The value already exists!',
+    //         'name.required' => 'The product name is mandatory!', // speciallies the field name
+    //     ];
+    // }
+    // protected function rules($id = 0)
+    // {
+    //     return[
+    //         'name' => 'required|max:255|min:3',
+    //         'slug' => 'required|unique:products,slug',
+    //         'category_id' => 'nullable|int|exists:categories,id',
+    //         'description' => 'nullable|string',
+    //         'short_description' => 'string|max:500',
+    //         'price' => 'required|numeric|min:0',
+    //         'compare_price' => 'nullable|numeric|min:0|gt:price',       //gt = greater than  // gte = greater than or equal =
+    //         'image' => 'nullable|image|dimensions:min_width=400,min_height=300,|max:500',   // 500KB  // 1024KB = 1MB
+    //         'status' => 'required|in:active,draft,archived',
+    //         // 'image' => 'file|mimetypes:image/png,image/jpg,image/jpeg,image/gif',   /// more secure than mimes and it used for imaes/files/videos
+    //     ];
+    // }
 }
