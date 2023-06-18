@@ -40,9 +40,11 @@ class CategoriesController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        $category = new Category();
-        $category->name = $request->input('name');
-        $category->save();
+        $category = Category::create($request->validated());
+
+        // $category = new Category();
+        // $category->name = $request->input('name');
+        // $category->save();
 
         return redirect()->route('categories.index')
             ->with('success', "Category ({$category->name}) Added");
@@ -59,9 +61,9 @@ class CategoriesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Category $category)
     {
-        $category = Category::findOrFail($id); //return Model Object or NUll
+        // $category = Category::findOrFail($id); //return Model Object or NUll
         return view(
             'admin.categories.edit',
             [
@@ -73,11 +75,13 @@ class CategoriesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CategoryRequest $request, string $id)
+    public function update(CategoryRequest $request, Category $category)
     {
-        $category = Category::findOrFail($id);
-        $category->name = $request->input('name');
-        $category->save();
+        // $category = Category::findOrFail($id);
+        $category->update($request->validated());
+
+        // $category->name = $request->input('name');
+        // $category->save();
         return redirect()->route('categories.index')
             ->with('success', "Category ({$category->name}) Updated");
     }
@@ -85,11 +89,11 @@ class CategoriesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy( Category $category)
     {
         //  Category::destroy($id);
         //  return redirect()->route('categories.index')
-        $category = Category::findOrFail($id);
+        // $category = Category::findOrFail($id);
         $category->delete();
         return redirect()->route('categories.index')
             ->with('success', "Category ({$category->name}) Deleted");

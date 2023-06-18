@@ -62,21 +62,28 @@ class ProductsController extends Controller
         // $messages = $this->messages();
         // $request->validate($rules, $messages);
 
-        $product = new Product();
-        $product->name = $request->input('name');
-        $product->slug = $request->input('slug');
-        $product->category_id = $request->input('category_id');
-        $product->description = $request->input('description');
-        $product->short_description = $request->input('short_description');
-        $product->price = $request->input('price');
-        $product->status = $request->input('status', 'active');
-        $product->compare_price = $request->input('compare_price');
-        $product->image = $request->input('image');
-        $product->save();
+        /// Mass assignment
+        // $product = Product::create($request->only('name','slug'));
+        // $product = Product::create( $request->all());
+        $product = Product::create($request->validated());
+        // $product = Product::create($request->except('price'));
+
+        /// == ///
+        // $product = new Product();
+        // $product->name = $request->input('name');
+        // $product->slug = $request->input('slug');
+        // $product->category_id = $request->input('category_id');
+        // $product->description = $request->input('description');
+        // $product->short_description = $request->input('short_description');
+        // $product->price = $request->input('price');
+        // $product->status = $request->input('status', 'active');
+        // $product->compare_price = $request->input('compare_price');
+        // $product->image = $request->input('image');
+        // $product->save();
         //prg : post redirect get
         // return redirect()->route('products.index');
         return redirect()->route('products.index')
-            ->with('success', "Product ({$product->name}) Added");
+            ->with('success', "Product ({$product->name}) Created");
     }
 
     /**
@@ -90,10 +97,10 @@ class ProductsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Product $product)
     {
         // $product = Product::where('id', '=', $id)->first(); // return Model
-        $product = Product::findOrFail($id); //return Model Object or NUll
+        // $product = Product::findOrFail($id); //return Model Object or NUll
         $categories = Category::all(); //return Model Object or NUll
         return view(
             'admin.products.edit',
@@ -108,22 +115,24 @@ class ProductsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ProductRequest $request, string $id)
+    public function update(ProductRequest $request, Product $product)
     {
         // $rules = $this->rules($id);
         // $messages = $this->messages();
         // $request->validate($rules, $messages);
 
-        $product = Product::findOrFail($id);
-        $product->name = $request->input('name');
-        $product->slug = $request->input('slug');
-        $product->description = $request->input('description');
-        $product->short_description = $request->input('short_description');
-        $product->price = $request->input('price');
-        $product->status = $request->input('status', 'active');
-        $product->compare_price = $request->input('compare_price');
-        $product->image = $request->input('image');
-        $product->save();
+        // $product = Product::findOrFail($id);
+        // Mass assignment
+        $product->update($request->validated());
+        // $product->name = $request->input('name');
+        // $product->slug = $request->input('slug');
+        // $product->description = $request->input('description');
+        // $product->short_description = $request->input('short_description');
+        // $product->price = $request->input('price');
+        // $product->status = $request->input('status', 'active');
+        // $product->compare_price = $request->input('compare_price');
+        // $product->image = $request->input('image');
+        // $product->save();
         return redirect()->route('products.index')
             ->with('success', "Product ({$product->name}) Updated");
     }
@@ -131,11 +140,11 @@ class ProductsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
         // Product::where('id', '=', $id)->delete();
         // Product::destroy($id);
-        $product = Product::findOrFail($id);
+        // $product = Product::findOrFail($id);
         $product->delete();
         return redirect()->route('products.index')
             ->with('success', "Product ({$product->name}) deleted");
