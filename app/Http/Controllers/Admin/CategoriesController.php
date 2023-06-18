@@ -34,6 +34,10 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
+        $rules = [
+            'name' => 'required|max:255|min:3',
+        ];
+        $request->validate($rules);
         $category = new Category();
         $category->name = $request->input('name');
         $category->save();
@@ -69,6 +73,10 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $rules = [
+            'name' => 'required|max:255|min:3',
+        ];
+        $request->validate($rules);
         $category = Category::findOrFail($id);
         $category->name = $request->input('name');
         $category->save();

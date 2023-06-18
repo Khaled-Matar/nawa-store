@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 
 class ProductsController extends Controller
 {
@@ -48,7 +47,12 @@ class ProductsController extends Controller
         $categories = Category::all();
         return view('admin.products.create', [
             'product' => new Product(),
-            'categries' => $categories,
+            'categories' => $categories,
+            'status_options' => [
+                'active' => 'Active',
+                'draft' => 'Draft',
+                'archived' => 'Archived'
+            ],
         ]);
     }
 
@@ -57,6 +61,19 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
+        $rules = [
+            'name' => 'required|max:255|min:3',
+            'slug' => 'required|unique:products,slug',
+            'category_id' => 'nullable|int|exists:categories,id',
+            'description' => 'nullable|string',
+            'short_description' => 'string|max:500',
+            'price' => 'required|numeric|min:0',
+            'compare_price' => 'nullable|numeric|min:0|gt:price',       //gt = greater than  // gte = greater than or equal =
+            'image' => 'nullable|image|dimensions:min_width=400,min_height=300,|max:500',   // 500KB  // 1024KB = 1MB
+            'status' => 'required|in:active,draft,archived',
+            // 'image' => 'file|mimetypes:image/png,image/jpg,image/jpeg,image/gif',   /// more secure than mimes and it used for imaes/files/videos
+        ];
+        $request->validate($rules);
         $product = new Product();
         $product->name = $request->input('name');
         $product->slug = $request->input('slug');
@@ -64,13 +81,14 @@ class ProductsController extends Controller
         $product->description = $request->input('description');
         $product->short_description = $request->input('short_description');
         $product->price = $request->input('price');
+        $product->status = $request->input('status', 'active');
         $product->compare_price = $request->input('compare_price');
         $product->image = $request->input('image');
         $product->save();
         //prg : post redirect get
         // return redirect()->route('products.index');
         return redirect()->route('products.index')
-        ->with('success', "Product ({$product->name}) Added");
+            ->with('success', "Product ({$product->name}) Added");
     }
 
     /**
@@ -88,12 +106,17 @@ class ProductsController extends Controller
     {
         // $product = Product::where('id', '=', $id)->first(); // return Model
         $product = Product::findOrFail($id); //return Model Object or NUll
-        $categories = Category::findOrFail($id); //return Model Object or NUll
+        $categories = Category::all(); //return Model Object or NUll
         return view(
             'admin.products.edit',
             [
                 'product' => $product,
                 'categories' => $categories,
+                'status_options' => [
+                    'active' => 'Active',
+                    'draft' => 'Draft',
+                    'archived' => 'Archived'
+                ],
             ]
         );
     }
@@ -103,17 +126,31 @@ class ProductsController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $rules = [
+            'name' => 'required|max:255|min:3',
+            'slug' => "required|unique:products,slug,$id",
+            'category_id' => 'nullable|int|exists:categories,id',
+            'description' => 'nullable|string',
+            'short_description' => 'string|max:500',
+            'price' => 'required|numeric|min:0',
+            'compare_price' => 'nullable|numeric|min:0|gt:price',       //gt = greater than  // gte = greater than or equal =
+            'image' => 'nullable|image|dimensions:min_width=400,min_height=300,|max:500',   // 500KB  // 1024KB = 1MB
+            'status' => 'required|in:active,draft,archived',
+            // 'image' => 'file|mimetypes:image/png,image/jpg,image/jpeg,image/gif',   /// more secure than mimes and it used for imaes/files/videos
+        ];
+        $request->validate($rules);
         $product = Product::findOrFail($id);
         $product->name = $request->input('name');
         $product->slug = $request->input('slug');
         $product->description = $request->input('description');
         $product->short_description = $request->input('short_description');
         $product->price = $request->input('price');
+        $product->status = $request->input('status', 'active');
         $product->compare_price = $request->input('compare_price');
         $product->image = $request->input('image');
         $product->save();
         return redirect()->route('products.index')
-        ->with('success', "Product ({$product->name}) Updated");
+            ->with('success', "Product ({$product->name}) Updated");
     }
 
     /**
@@ -126,6 +163,6 @@ class ProductsController extends Controller
         $product = Product::findOrFail($id);
         $product->delete();
         return redirect()->route('products.index')
-        ->with('success', "Product ({$product->name}) deleted");
+            ->with('success', "Product ({$product->name}) deleted");
     }
 }
