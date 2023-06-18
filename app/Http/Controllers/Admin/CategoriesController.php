@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -13,11 +14,11 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $category = Category::all();
+        $categories = Category::all();
 
         return view('admin.categories.index', [
             'title' => 'Categories List',
-            'categories' => $category,
+            'categories' => $categories,
         ]);
     }
 
@@ -26,24 +27,25 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        return view(
+            'admin.categories.create',
+            [
+                'category' => new Category(),
+            ]
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $rules = [
-            'name' => 'required|max:255|min:3',
-        ];
-        $request->validate($rules);
         $category = new Category();
         $category->name = $request->input('name');
         $category->save();
-        
+
         return redirect()->route('categories.index')
-        ->with('success', "Category ({$category->name}) Added");
+            ->with('success', "Category ({$category->name}) Added");
     }
 
     /**
@@ -71,17 +73,13 @@ class CategoriesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CategoryRequest $request, string $id)
     {
-        $rules = [
-            'name' => 'required|max:255|min:3',
-        ];
-        $request->validate($rules);
         $category = Category::findOrFail($id);
         $category->name = $request->input('name');
         $category->save();
         return redirect()->route('categories.index')
-        ->with('success', "Category ({$category->name}) Updated");
+            ->with('success', "Category ({$category->name}) Updated");
     }
 
     /**
@@ -94,6 +92,6 @@ class CategoriesController extends Controller
         $category = Category::findOrFail($id);
         $category->delete();
         return redirect()->route('categories.index')
-        ->with('success', "Category ({$category->name}) Deleted");
+            ->with('success', "Category ({$category->name}) Deleted");
     }
 }

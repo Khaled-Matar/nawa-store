@@ -6,7 +6,7 @@
         @csrf
         @include('admin.categories._form',
         [
-            'submit_label' => 'Update'
+            'submit_label' => 'Create'
         ])
     </form>
 @endsection
