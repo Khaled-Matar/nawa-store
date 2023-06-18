@@ -49,11 +49,7 @@ class ProductsController extends Controller
         return view('admin.products.create', [
             'product' => new Product(),
             'categories' => $categories,
-            'status_options' => [
-                'active' => 'Active',
-                'draft' => 'Draft',
-                'archived' => 'Archived'
-            ],
+            'status_options' => Product::statusOptions(),
         ]);
     }
 
@@ -104,11 +100,7 @@ class ProductsController extends Controller
             [
                 'product' => $product,
                 'categories' => $categories,
-                'status_options' => [
-                    'active' => 'Active',
-                    'draft' => 'Draft',
-                    'archived' => 'Archived'
-                ],
+                'status_options' => Product::statusOptions(),
             ]
         );
     }
