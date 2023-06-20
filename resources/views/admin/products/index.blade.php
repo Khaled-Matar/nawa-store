@@ -20,6 +20,7 @@
     <table class="table">
         <thead>
             <tr>
+                <th></th>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Category</th>
@@ -34,10 +35,15 @@
             <td>
                 @foreach ($products as $product)
                     <tr>
+                        <td>
+                            <a href="{{$product->image_url }}">
+                                <img src="{{$product->image_url }}" width="60">
+                            </a>
+                        </td>
                         <td>{{ $product->id }} </td>
                         <td>{{ $product->name }} </td>
                         <td>{{ $product->category_name }} </td>
-                        <td>{{ $product->price }} </td>
+                        <td>{{ $product->price_formatted }} </td>
                         <td>{{ $product->compare_price }} </td>
                         <td>{{ $product->status }} </td>
                         <td><a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-outline-dark">

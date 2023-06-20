@@ -4,9 +4,8 @@
 
     <form action="{{ route('categories.store') }}" method="post">
         @csrf
-        @include('admin.categories._form',
-        [
-            'submit_label' => 'Create'
+        @include('admin.categories._form', [
+            'submit_label' => 'Create',
         ])
     </form>
 @endsection

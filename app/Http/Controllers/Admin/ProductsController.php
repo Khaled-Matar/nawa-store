@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductsController extends Controller
 {
@@ -61,13 +61,9 @@ class ProductsController extends Controller
         // $rules = $this->rules();
         // $messages = $this->messages();
         // $request->validate($rules, $messages);
-
-        /// Mass assignment
         // $product = Product::create($request->only('name','slug'));
         // $product = Product::create( $request->all());
-        $product = Product::create($request->validated());
         // $product = Product::create($request->except('price'));
-
         /// == ///
         // $product = new Product();
         // $product->name = $request->input('name');
@@ -80,8 +76,18 @@ class ProductsController extends Controller
         // $product->compare_price = $request->input('compare_price');
         // $product->image = $request->input('image');
         // $product->save();
-        //prg : post redirect get
+        // prg : post redirect get
         // return redirect()->route('products.index');
+
+        // Mass assignment
+        $data = $request->validated();
+        if ($request->hasFile('image')) {
+            $file = $request->file('image'); // Uploaded File Object
+            $path = $file->store('uploads/images', 'public'); // return file path after store
+            $data['image'] = $path;
+        }
+        $product = Product::create($data);
+        // $product = Product::create($request->validated());
         return redirect()->route('products.index')
             ->with('success', "Product ({$product->name}) Created");
     }
@@ -120,10 +126,7 @@ class ProductsController extends Controller
         // $rules = $this->rules($id);
         // $messages = $this->messages();
         // $request->validate($rules, $messages);
-
         // $product = Product::findOrFail($id);
-        // Mass assignment
-        $product->update($request->validated());
         // $product->name = $request->input('name');
         // $product->slug = $request->input('slug');
         // $product->description = $request->input('description');
@@ -133,6 +136,20 @@ class ProductsController extends Controller
         // $product->compare_price = $request->input('compare_price');
         // $product->image = $request->input('image');
         // $product->save();
+        //           =                //
+        // Mass assignment
+        $data = $request->validated();
+        if ($request->hasFile('image')) {
+            $file = $request->file('image'); // Uploaded File Object
+            $path = $file->store('uploads/images', 'public'); // return file path after store
+            $data['image'] = $path;
+        }
+        $old_image = $product->image;
+        $product->update($data);
+        if ($old_image && $old_image != $product->image){
+            Storage::disk('public')->delete($old_image);
+        }
+        // $product->update($request->validated());
         return redirect()->route('products.index')
             ->with('success', "Product ({$product->name}) Updated");
     }
@@ -146,31 +163,10 @@ class ProductsController extends Controller
         // Product::destroy($id);
         // $product = Product::findOrFail($id);
         $product->delete();
+        if ($product->image){
+            Storage::disk('public')->delete($product->image);
+        }
         return redirect()->route('products.index')
             ->with('success', "Product ({$product->name}) deleted");
     }
-
-    // protected function messages()
-    // {
-    //     return[
-    //         'required' => ':attribute field is required!!',           // :attribute = field name
-    //         'unquie' => 'The value already exists!',
-    //         'name.required' => 'The product name is mandatory!', // speciallies the field name
-    //     ];
-    // }
-    // protected function rules($id = 0)
-    // {
-    //     return[
-    //         'name' => 'required|max:255|min:3',
-    //         'slug' => 'required|unique:products,slug',
-    //         'category_id' => 'nullable|int|exists:categories,id',
-    //         'description' => 'nullable|string',
-    //         'short_description' => 'string|max:500',
-    //         'price' => 'required|numeric|min:0',
-    //         'compare_price' => 'nullable|numeric|min:0|gt:price',       //gt = greater than  // gte = greater than or equal =
-    //         'image' => 'nullable|image|dimensions:min_width=400,min_height=300,|max:500',   // 500KB  // 1024KB = 1MB
-    //         'status' => 'required|in:active,draft,archived',
-    //         // 'image' => 'file|mimetypes:image/png,image/jpg,image/jpeg,image/gif',   /// more secure than mimes and it used for imaes/files/videos
-    //     ];
-    // }
 }

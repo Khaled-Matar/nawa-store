@@ -108,8 +108,11 @@
             </div>
         </div>
         <div class="form-floating mb-3">
-            <label for="image">Image</label>
+            <label for="image">Product Image</label>
             <div>
+                <a href="{{ asset('storage/' . $image_url) }}">
+                    <img src="{{ Storage::disk('public')->url($product->image) }}" width="60">
+                </a>
                 <input type="file" class="form-control @error('image') is-invalid @enderror" id="image"
                     name="image" placeholder="Product Image">
                 @error('image')

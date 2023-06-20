@@ -41,11 +41,6 @@ class CategoriesController extends Controller
     public function store(CategoryRequest $request)
     {
         $category = Category::create($request->validated());
-
-        // $category = new Category();
-        // $category->name = $request->input('name');
-        // $category->save();
-
         return redirect()->route('categories.index')
             ->with('success', "Category ({$category->name}) Added");
     }
@@ -77,11 +72,7 @@ class CategoriesController extends Controller
      */
     public function update(CategoryRequest $request, Category $category)
     {
-        // $category = Category::findOrFail($id);
         $category->update($request->validated());
-
-        // $category->name = $request->input('name');
-        // $category->save();
         return redirect()->route('categories.index')
             ->with('success', "Category ({$category->name}) Updated");
     }
@@ -89,11 +80,8 @@ class CategoriesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy( Category $category)
+    public function destroy(Category $category)
     {
-        //  Category::destroy($id);
-        //  return redirect()->route('categories.index')
-        // $category = Category::findOrFail($id);
         $category->delete();
         return redirect()->route('categories.index')
             ->with('success', "Category ({$category->name}) Deleted");
