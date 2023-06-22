@@ -35,9 +35,9 @@
             <td>
                 @foreach ($products as $product)
                     <tr>
-                        <td>
-                            <a href="{{$product->image_url }}">
-                                <img src="{{$product->image_url }}" width="60">
+                        <td> 
+                            <a href="{{ $product->image_url }}">
+                                <img src="{{ $product->image_url }}" width="60" alt="">
                             </a>
                         </td>
                         <td>{{ $product->id }} </td>
@@ -61,4 +61,5 @@
             </td>
         </tbody>
     </table>
+    {{$products->links()}}
 @endsection

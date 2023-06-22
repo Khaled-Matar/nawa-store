@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductImage;
 use Illuminate\Support\Facades\Storage;
 
 class ProductsController extends Controller
@@ -32,7 +33,7 @@ class ProductsController extends Controller
             ->select([
                 'products.*',
                 'categories.name as category_name',
-            ])->get(); // Collection of Product Model
+            ])->paginate(5); // Collection of Product Model
 
         return view('admin.products.index', [
             'title' => 'Products List',
@@ -87,6 +88,15 @@ class ProductsController extends Controller
             $data['image'] = $path;
         }
         $product = Product::create($data);
+
+        if ($request->hasFile('gallery')) {
+            foreach ($request->file('gallery') as $file) {
+                ProductImage::create([
+                    'product_id' => $product->id,
+                    'image' => $file->store('uploads/images', 'public'),
+                ]);
+            }   // return array of returned files
+        }
         // $product = Product::create($request->validated());
         return redirect()->route('products.index')
             ->with('success', "Product ({$product->name}) Created");
@@ -108,15 +118,17 @@ class ProductsController extends Controller
         // $product = Product::where('id', '=', $id)->first(); // return Model
         // $product = Product::findOrFail($id); //return Model Object or NUll
         $categories = Category::all(); //return Model Object or NUll
+        $gallery = ProductImage::where('product_id', '=', $product->id)->get();
         return view(
             'admin.products.edit',
             [
                 'product' => $product,
                 'categories' => $categories,
                 'status_options' => Product::statusOptions(),
+                'gallery' => $gallery,
             ]
         );
-    }
+    }       
 
     /**
      * Update the specified resource in storage.
@@ -146,8 +158,16 @@ class ProductsController extends Controller
         }
         $old_image = $product->image;
         $product->update($data);
-        if ($old_image && $old_image != $product->image){
+        if ($old_image && $old_image != $product->image) {
             Storage::disk('public')->delete($old_image);
+        }
+        if ($request->hasFile('gallery')) {
+            foreach ($request->file('gallery') as $file) {
+                ProductImage::create([
+                    'product_id' => $product->id,
+                    'image' => $file->store('uploads/images', 'public'),
+                ]);
+            }   // return array of returned files
         }
         // $product->update($request->validated());
         return redirect()->route('products.index')
@@ -163,7 +183,7 @@ class ProductsController extends Controller
         // Product::destroy($id);
         // $product = Product::findOrFail($id);
         $product->delete();
-        if ($product->image){
+        if ($product->image) {
             Storage::disk('public')->delete($product->image);
         }
         return redirect()->route('products.index')

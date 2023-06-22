@@ -9,13 +9,7 @@
     </div>
 @endif
 <div class="form-floating mb-3">
-    <label for="name">Category Name</label>
-    <div>
-        <input type="text" class="form-control  @error('name') is-invalid @enderror" id="name" name="name"
-            value="{{ old('name', $category->name) }}" placeholder="Name">
-        @error('name')
-            <p class="invalid-feedback">{{ $message }}</p>
-        @enderror
-    </div>
+    <x-form.input label="Category Name" id="name" name="name" value="{{ $category->name }}"/> 
+
 </div>
 <button type="submit" class="btn btn-primary">save</button>

@@ -47,4 +47,6 @@
             </td>
         </tbody>
     </table>
+    {{$categories->links()}}
+
 @endsection

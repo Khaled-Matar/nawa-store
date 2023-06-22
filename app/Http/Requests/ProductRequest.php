@@ -22,21 +22,24 @@ class ProductRequest extends FormRequest
      */
     public function rules(): array
     {
-        $product = $this->route('product', new Product());
-        // $product = $this->route('product', 0);
-        // $id = $product? $product->id : 0;
+        // $product = $this->route('product', new Product());
+        $product = $this->route('product', 0);
+        $id = $product? $product->id : 0;
+
         return [
             'name' => 'required|max:255|min:3',
-            'slug' => "required|unique:products,slug,{$product->id}",
+            'slug' => "required|unique:products,slug,{$id}",
             // 'slug' => "required|unique:products,slug,{$id}",
             'category_id' => 'nullable|int|exists:categories,id',
             'description' => 'nullable|string',
             'short_description' => 'string|max:500',
             'price' => 'required|numeric|min:0',
             'compare_price' => 'nullable|numeric|min:0|gt:price',       //gt = greater than  // gte = greater than or equal =
-            'image' => 'nullable|image|dimensions:min_width=400,min_height=300,|max:500',   // 500KB  // 1024KB = 1MB
+            'image' => 'nullable|image|dimensions:min_width=100,min_height=100,|max:500',   // 500KB  // 1024KB = 1MB
             'status' => 'required|in:active,draft,archived',
             // 'image' => 'file|mimetypes:image/png,image/jpg,image/jpeg,image/gif',   /// more secure than mimes and it used for imaes/files/videos
+            'gallery' => 'nullable|array',
+            'gallery.*' => 'image||dimensions:min_width=100,min_height=100,|max:1024',        
         ];
     }
 
