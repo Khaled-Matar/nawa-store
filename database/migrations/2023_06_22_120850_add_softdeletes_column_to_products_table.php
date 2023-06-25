@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
-            $table->id(); //id BIGINT unsigned AUTO_INCREMENT PRIMARY_KEY
-            $table->string('name', 255); // VARCHAR, يحجز على عدد الاحرف داخله حتى لو كان اقل من 255       
-            $table->timestamps();
+        Schema::table('products', function (Blueprint $table) {
+            // deleted_at TIMESTAMP NULL
+            $table->softDeletes();
         });
     }
 
@@ -23,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::table('products', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
     }
 };

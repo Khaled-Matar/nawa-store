@@ -14,7 +14,7 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Category::paginate(5);
+        $categories = Category::simplePaginate(10); // 10 categories at 1 page
 
         return view('admin.categories.index', [
             'title' => 'Categories List',
@@ -40,7 +40,15 @@ class CategoriesController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        $category = Category::create($request->validated());
+        // $category = Category::create($request->validated());
+        $data = $request->validated();
+        if ($request->hasFile('image')) {
+            $file = $request->file('image'); // Uploaded File Object
+            $path = $file->store('uploads/image', 'public'); // return file path after store
+            $data['image'] = $path;
+        }
+        $category = Category::create($data);
+
         return redirect()->route('categories.index')
             ->with('success', "Category ({$category->name}) Added");
     }

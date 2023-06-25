@@ -33,7 +33,15 @@ class ProductsController extends Controller
             ->select([
                 'products.*',
                 'categories.name as category_name',
-            ])->paginate(5); // Collection of Product Model
+            ])
+            // ->onlyTrashed()         // show products deleted only
+            // ->withTrashed()            // show products with deleted
+            // ->withoutGlobalScopes('owner') // stops global from divide showing products between users
+            // ->active()
+            // ->status('archived')
+            // ->status('active')
+            // ->status('draft')
+            ->simplePaginate(5); // Collection of Product Model // 5 products at 1 page
 
         return view('admin.products.index', [
             'title' => 'Products List',
@@ -183,10 +191,37 @@ class ProductsController extends Controller
         // Product::destroy($id);
         // $product = Product::findOrFail($id);
         $product->delete();
+      
+        return redirect()->route('products.index')
+            ->with('success', "Product ({$product->name}) deleted");
+    }
+
+    public function trashed()
+    {
+        $products = Product::onlyTrashed()->paginate();
+        return view('admin.products.trashed',
+        [
+            'products' => $products,
+        ]);
+    }
+
+    public function restore($id)
+    {
+        $product = Product::onlyTrashed()->findOrFail($id); 
+        $product->restore();
+        return redirect()->route('products.index')
+        ->with('success', "Product ({$product->name}) Restored");
+    }
+
+
+    public function forceDelete($id)
+    {
+        $product = Product::onlyTrashed()->findOrFail($id); 
+        $product->forceDelete();
         if ($product->image) {
             Storage::disk('public')->delete($product->image);
         }
         return redirect()->route('products.index')
-            ->with('success', "Product ({$product->name}) deleted");
+        ->with('success', "Product ({$product->name}) deleted forever!");
     }
 }

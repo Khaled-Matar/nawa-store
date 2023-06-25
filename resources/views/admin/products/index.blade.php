@@ -1,8 +1,12 @@
 @extends('layouts.admin')
 @section('content')
+<header class="mb-4 d-flex">
     <h2 class="mb-4 fs-3">{{ $title }}</h2>
-    <a href="{{ route('products.create') }}" class="btn btn-sm btn-primary"> + Create Product</a>
-
+    <div class="ml-auto">
+        <a href="{{ route('products.create') }}" class="btn btn-sm btn-primary"> + Create Product</a>
+        <a href="{{ route('products.trashed') }}" class="btn btn-sm btn-danger"> <i class="fas fa-trash"> View Trash</i></a>
+    </div>
+</header>
     @if (session()->has('success'))
         <div id="success-message" class="alert alert-success">
             {{ session('success') }}
@@ -61,5 +65,6 @@
             </td>
         </tbody>
     </table>
-    {{$products->links()}}
+    {{ $products->links()}}
+
 @endsection
