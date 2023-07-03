@@ -1,10 +1,8 @@
 <?php
 
-use App\Http\Controllers\Admin\ProductsController;
-use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\UserController;
-use App\Models\Product;
+use App\Http\Controllers\ProfileController;
+use Illuminate\Console\View\Components\Confirm;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,27 +17,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-// Route::get('/admin/products', [ProductsController::class, 'index'])->name('products.index);
-// Route::get('/admin/products/create', [ProductsController::class, 'create']);
-// Route::post('/admin/products', [ProductsController::class, 'store']);
-// Route::get('/admin/products/{id}', [ProductsController::class, 'show']);
-// Route::get('/admin/products/{id}/edit', [ProductsController::class, 'edit']);
-// Route::put('/admin/products/{id}', [ProductsController::class, 'update']);
-// Route::delete('/admin/products/{id}', [ProductsController::class, 'destroy']);
-//     =====     // 
-Route::resource('/admin/categories', CategoriesController::class);
-// ----------------------------------------------------------------------------------------------------------- //
-Route::get('admin/products/trashed', [ProductsController::class, 'trashed'])
-    ->name('products.trashed');
-    Route::put('/admin/products/{product}/restore', [ProductsController::class, 'restore'])
-    ->name('products.restore');
-Route::delete('/admin/products/{product}/force', [ProductsController::class, 'forceDelete'])
-    ->name('products.force-delete');
-Route::resource('/admin/products', ProductsController::class);
-    
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/products/{product}',[App\Http\Controllers\ProductsController::class, 'show'])
-->name('shop.products.show');
 
-Route::get('/users', [UserController::class, 'index']);
-Route::get('/users/{name}', [UserController::class, 'show']);
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])
+    ->middleware('password.confirm')
+    ->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__ . '/auth.php';
+require __DIR__ . '/shop.php';
+require __DIR__ . '/admin.php';
+require __DIR__ . '/super-admin.php';

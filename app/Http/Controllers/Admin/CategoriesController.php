@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CategoriesController extends Controller
 {
@@ -14,8 +15,10 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Category::simplePaginate(10); // 10 categories at 1 page
-
+        $categories = Category::select([
+            'categories.*',
+        ])->simplePaginate(10);
+         // 10 categories at 1 page  
         return view('admin.categories.index', [
             'title' => 'Categories List',
             'categories' => $categories,
@@ -44,7 +47,7 @@ class CategoriesController extends Controller
         $data = $request->validated();
         if ($request->hasFile('image')) {
             $file = $request->file('image'); // Uploaded File Object
-            $path = $file->store('uploads/image', 'public'); // return file path after store
+            $path = $file->store('uploads/images', 'public'); // return file path after store
             $data['image'] = $path;
         }
         $category = Category::create($data);
@@ -80,7 +83,20 @@ class CategoriesController extends Controller
      */
     public function update(CategoryRequest $request, Category $category)
     {
-        $category->update($request->validated());
+        $data = $request->validated();
+        if ($request->hasFile('image')) {
+            $file = $request->file('image'); // Uploaded File Object
+            $path = $file->store('uploads/images', 'public'); // return file path after store
+            $data['image'] = $path;
+        }
+        $old_image = $category->image;
+        $category->update($data);
+        if ($old_image && $old_image != $category->image) {
+            Storage::disk('public')->delete($old_image);
+        } else {
+            $category->update($request->validated());
+        }
+
         return redirect()->route('categories.index')
             ->with('success', "Category ({$category->name}) Updated");
     }
@@ -93,5 +109,36 @@ class CategoriesController extends Controller
         $category->delete();
         return redirect()->route('categories.index')
             ->with('success', "Category ({$category->name}) Deleted");
+    }
+
+    public function trashed()
+    {
+        $categories = Category::onlyTrashed()->paginate();
+        return view(
+            'admin.categories.trashed',
+            [
+                'categories' => $categories,
+            ]
+        );
+    }
+
+    public function restore($id)
+    {
+        $category = Category::onlyTrashed()->findOrFail($id);
+        $category->restore();
+        return redirect()->route('categories.index')
+            ->with('success', "Category ({$category->name}) Restored");
+    }
+
+
+    public function forceDelete($id)
+    {
+        $category = Category::onlyTrashed()->findOrFail($id);
+        $category->forceDelete();
+        if ($category->image) {
+            Storage::disk('public')->delete($category->image);
+        }
+        return redirect()->route('categories.index')
+            ->with('success', "Category ({$category->name}) deleted forever!");
     }
 }

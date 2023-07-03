@@ -6,6 +6,7 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use NumberFormatter;
 
@@ -18,7 +19,8 @@ class Product extends Model
 
     protected $fillable = [
 
-        'name', 'slug', 'category_id', 'description', 'short_description', 'price', 'compare_price', 'status', 'image',
+        'name', 'slug', 'category_id', 'description', 'short_description',
+        'price', 'compare_price', 'status', 'image', 'user_id',
     ];
 
     //////       X العكس         //////////////
@@ -28,10 +30,23 @@ class Product extends Model
 
     protected static function booted()
     {
-        static::addGlobalScope('owner', function (Builder $query) {
-            $query->where('user_id', '=', 1);
-        });
+        // static::addGlobalScope('owner', function (Builder $query) {
+        //     $query->where('user_id', '=', Auth::id());
+        // });
     }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id')->withDefault([
+            'name' => 'Uncategorized',
+        ]);
+    }
+
+    public function gallery()
+    {
+        return $this->hasMany(ProductImage::class);
+    }
+
 
     public function scopeActive(Builder $query)
     {
@@ -41,6 +56,29 @@ class Product extends Model
     public function scopeStatus(Builder $query, $status)
     {
         $query->where('status', '=', $status);
+    }
+
+    public function scopeFilter(Builder $query, $filters)
+    {
+
+        $query->when($filters['search'] ?? false, function ($query, $value) {
+            $query->where(function ($query) use ($value) {
+                $query->where('products.name', 'LIKE', "%{$value}%")
+                    ->orWhere('products.description', 'LIKE', "%{$value}%");
+            });
+        })
+            ->when($filters['status'] ?? false, function ($query, $value) {
+                $query->where('products.status', '=', $value);
+            })
+            ->when($filters['category_id'] ?? false, function ($query, $value) {
+                $query->where('products.category_id', '=', $value);
+            })
+            ->when($filters['price_min'] ?? false, function ($query, $value) {
+                $query->where('products.price', '>=', $value);
+            })
+            ->when($filters['price_max']  ?? false, function ($query, $value) {
+                $query->where('products.price', '<=', $value);
+            });
     }
 
     public static function statusOptions()
@@ -57,8 +95,9 @@ class Product extends Model
     {
         if ($this->image) {
             return Storage::disk('public')->url($this->image);
+        } else {
+            return 'https://placehold.co/60x60?text=No+Image';
         }
-        return 'https://placehold.co/60x60?text=No+Image';
     }
 
     public function getNameAttribute($value)

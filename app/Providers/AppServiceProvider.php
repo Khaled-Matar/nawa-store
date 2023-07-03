@@ -21,7 +21,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Schema::defaultStringLength(191);
+        // Schema::defaultStringLength(191);
         Paginator::useBootstrapFive();
+        // View::share([
+        //     'categories' => $categories,
+        //     'status_options' => Product::statusOptions(),
+        // ]);
     }
 }

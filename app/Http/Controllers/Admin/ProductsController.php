@@ -7,15 +7,30 @@ use App\Http\Requests\ProductRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\View;
 
 class ProductsController extends Controller
 {
+    public function __construct(Request $request)
+    {
+        if($request->method() == 'GET'){
+
+            $categories = Category::all();
+            View::share([
+                'categories' => $categories,
+                'status_options' => Product::statusOptions(),
+            ]);
+        } 
+    }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+
         // Select products.*, categories.name as category_name
         // FROM products                             
         // INNER JOIN  categories ON categories.id = products.category_id
@@ -34,14 +49,15 @@ class ProductsController extends Controller
                 'products.*',
                 'categories.name as category_name',
             ])
-            // ->onlyTrashed()         // show products deleted only
-            // ->withTrashed()            // show products with deleted
-            // ->withoutGlobalScopes('owner') // stops global from divide showing products between users
-            // ->active()
-            // ->status('archived')
-            // ->status('active')
-            // ->status('draft')
-            ->simplePaginate(5); // Collection of Product Model // 5 products at 1 page
+            ->filter($request->query())
+            ->paginate(10); // Collection of Product Model // 5 products at 1 page
+        // ->onlyTrashed()         // show products deleted only
+        // ->withTrashed()            // show products with deleted
+        // ->withoutGlobalScopes('owner') // stops global from divide showing products between users
+        // ->active()
+        // ->status('archived')
+        // ->status('active')
+        // ->status('draft')
 
         return view('admin.products.index', [
             'title' => 'Products List',
@@ -54,11 +70,9 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
+        // $categories = Category::all();
         return view('admin.products.create', [
             'product' => new Product(),
-            'categories' => $categories,
-            'status_options' => Product::statusOptions(),
         ]);
     }
 
@@ -95,6 +109,7 @@ class ProductsController extends Controller
             $path = $file->store('uploads/images', 'public'); // return file path after store
             $data['image'] = $path;
         }
+        $data['user_id'] = Auth::id();
         $product = Product::create($data);
 
         if ($request->hasFile('gallery')) {
@@ -125,18 +140,16 @@ class ProductsController extends Controller
     {
         // $product = Product::where('id', '=', $id)->first(); // return Model
         // $product = Product::findOrFail($id); //return Model Object or NUll
-        $categories = Category::all(); //return Model Object or NUll
-        $gallery = ProductImage::where('product_id', '=', $product->id)->get();
+        // $categories = Category::all(); //return Model Object or NUll
+        // $gallery = ProductImage::where('product_id', '=', $product->id)->get();
         return view(
             'admin.products.edit',
             [
                 'product' => $product,
-                'categories' => $categories,
-                'status_options' => Product::statusOptions(),
-                'gallery' => $gallery,
+                'gallery' => $product->gallery,
             ]
         );
-    }       
+    }
 
     /**
      * Update the specified resource in storage.
@@ -191,7 +204,6 @@ class ProductsController extends Controller
         // Product::destroy($id);
         // $product = Product::findOrFail($id);
         $product->delete();
-      
         return redirect()->route('products.index')
             ->with('success', "Product ({$product->name}) deleted");
     }
@@ -199,29 +211,28 @@ class ProductsController extends Controller
     public function trashed()
     {
         $products = Product::onlyTrashed()->paginate();
-        return view('admin.products.trashed',
-        [
+        return view('admin.products.trashed', [
             'products' => $products,
         ]);
     }
 
     public function restore($id)
     {
-        $product = Product::onlyTrashed()->findOrFail($id); 
+        $product = Product::onlyTrashed()->findOrFail($id);
         $product->restore();
         return redirect()->route('products.index')
-        ->with('success', "Product ({$product->name}) Restored");
+            ->with('success', "Product ({$product->name}) Restored");
     }
 
 
     public function forceDelete($id)
     {
-        $product = Product::onlyTrashed()->findOrFail($id); 
+        $product = Product::onlyTrashed()->findOrFail($id);
         $product->forceDelete();
         if ($product->image) {
             Storage::disk('public')->delete($product->image);
         }
         return redirect()->route('products.index')
-        ->with('success', "Product ({$product->name}) deleted forever!");
+            ->with('success', "Product ({$product->name}) deleted forever!");
     }
 }

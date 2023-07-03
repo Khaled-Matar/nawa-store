@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id(); //id BIGINT unsigned AUTO_INCREMENT PRIMARY_KEY
-            $table->string('name', 255); // VARCHAR, يحجز على عدد الاحرف داخله حتى لو كان اقل من 255       
+            $table->string('name', 255); // VARCHAR, يحجز على عدد الاحرف داخله حتى لو كان اقل من 255      
             $table->timestamps();
         });
     }

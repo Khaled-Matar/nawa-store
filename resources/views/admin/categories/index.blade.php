@@ -1,8 +1,12 @@
 @extends('layouts.admin')
 @section('content')
-    <h2 class="mb-4 fs-3">{{ $title }}</h2>
-    <a href="{{ route('categories.create') }}" class="btn btn-sm btn-primary"> + Create Category</a>
-
+    <header class="mb-4 d-flex">
+        <h2 class="mb-4 fs-3">{{ $title }}</h2>
+        <div class="ml-auto">
+            <a href="{{ route('categories.create') }}" class="btn btn-sm btn-primary"> + Create Category</a>
+            <a href="{{ route('categories.trashed') }}" class="btn btn-sm btn-danger"> <i class="fas fa-trash"> View Trash</i></a>
+        </div>
+    </header>
     @if (session()->has('success'))
         <div id="success-message" class="alert alert-success">
             {{ session('success') }}
@@ -20,6 +24,7 @@
     <table class="table">
         <thead>
             <tr>
+                <th></th>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Edit</th>
@@ -30,6 +35,11 @@
             <td>
                 @foreach ($categories as $category)
                     <tr>
+                        <td> 
+                            <a href="{{ $category->image_url }}">
+                                <img src="{{ $category->image_url }}" width="60" alt="">
+                            </a>
+                        </td>
                         <td>{{ $category->id }} </td>
                         <td>{{ $category->name }}</td>
                         <td><a href="{{ route('categories.edit', $category->id) }}" class="btn btn-sm btn-outline-dark"><i
@@ -47,6 +57,5 @@
             </td>
         </tbody>
     </table>
-    {{$categories->links()}}
-
+    {{ $categories->links() }}  
 @endsection

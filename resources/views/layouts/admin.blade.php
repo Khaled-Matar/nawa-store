@@ -180,7 +180,11 @@
                             class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
+                        <a href="{{ route('profile.edit') }}" class="d-block">{{ Auth::user()->name }}</a>
+                        <form action="{{ route('logout') }}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-outline-danger">logout</button>
+                        </form>
                     </div>
                 </div>
 
@@ -222,6 +226,12 @@
                                     <a href="{{ route('categories.index') }}" class="nav-link active">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Categories</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('users.index') }}" class="nav-link active">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Users</p>
                                     </a>
                                 </li>
                             </ul>

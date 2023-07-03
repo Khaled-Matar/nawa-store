@@ -1,12 +1,13 @@
 @extends('layouts.admin')
 @section('content')
-<header class="mb-4 d-flex">
-    <h2 class="mb-4 fs-3">{{ $title }}</h2>
-    <div class="ml-auto">
-        <a href="{{ route('products.create') }}" class="btn btn-sm btn-primary"> + Create Product</a>
-        <a href="{{ route('products.trashed') }}" class="btn btn-sm btn-danger"> <i class="fas fa-trash"> View Trash</i></a>
-    </div>
-</header>
+    <header class="mb-4 d-flex">
+        <h2 class="mb-4 fs-3">{{ $title }}</h2>
+        <div class="ml-auto">
+            <a href="{{ route('products.create') }}" class="btn btn-sm btn-primary"> + Create Product</a>
+            <a href="{{ route('products.trashed') }}" class="btn btn-sm btn-danger"> <i class="fas fa-trash"> View
+                    Trash</i></a>
+        </div>
+    </header>
     @if (session()->has('success'))
         <div id="success-message" class="alert alert-success">
             {{ session('success') }}
@@ -21,6 +22,26 @@
         }, 5000);
     </script>
 
+    <form action="{{ URL::current() }}" method="get" class="form-inline">
+        <input type="text" name="search" value="{{request('search')}}" class="form-control mb-2 mr-2" placeholder="Search">
+        <select name="category_id" class="form-control mb-2 mr-2">
+            <option value="">All Categories</option>
+            @foreach ($categories as $category)
+            <option value="{{$category->id}}" @selected(request('category_id') == $category->id)>{{$category->name}}</option>
+            @endforeach
+        </select>
+        
+        <select name="Status" class="form-control mb-2 mr-2">
+        <option value="">Status</option>
+        @foreach ($status_options as $value => $text)
+        <option value="{{$value}}" @selected(request('status') == $value)>{{$text}}</option>
+        @endforeach
+    </select>
+        <input type="number" name="price_min" value="{{request('price_min')}}" class="form-control mb-2 mr-2" placeholder="price_min">
+        <input type="number" name="price_max" value="{{request('price_max')}}" class="form-control mb-2 mr-2" placeholder="price_max">
+        <button type="submit" class="btn btn-dark">Filter</button>
+
+    </form>
     <table class="table">
         <thead>
             <tr>
@@ -31,6 +52,8 @@
                 <th>Price</th>
                 <th>Compare Price</th>
                 <th>Status</th>
+                <th>Products Count</th>
+                <th>Products Avg Price</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -39,7 +62,7 @@
             <td>
                 @foreach ($products as $product)
                     <tr>
-                        <td> 
+                        <td>
                             <a href="{{ $product->image_url }}">
                                 <img src="{{ $product->image_url }}" width="60" alt="">
                             </a>
@@ -50,6 +73,8 @@
                         <td>{{ $product->price_formatted }} </td>
                         <td>{{ $product->compare_price }} </td>
                         <td>{{ $product->status }} </td>
+                        <td>{{ $category->products_count }}</td>
+                        <td>{{ $category->products_avg_price }}</td>
                         <td><a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-outline-dark">
                                 <i class="far fa-edit"></i>Edit</a></td>
                         <td>
@@ -65,6 +90,5 @@
             </td>
         </tbody>
     </table>
-    {{ $products->links()}}
-
+    {{ $products->links() }}
 @endsection

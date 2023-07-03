@@ -1,5 +1,4 @@
 <x-shop-layout :title="$product->name">
-
     <!-- Start Item Details -->
     <section class="item-details section">
         <div class="container">
@@ -11,9 +10,9 @@
                                 <div class="main-img">
                                     <img src="{{ $product->image_url }}" id="current" alt="#">
                                 </div>
-                                @if ($gallery)
+                                @if ($product->gallery)
                                     <div class="images">
-                                        @foreach ($gallery as $image)
+                                        @foreach ($product->gallery as $image)
                                             <img src="{{ $image->url }}" class="img" alt="#">
                                         @endforeach
                                     </div>
@@ -24,14 +23,13 @@
                     <div class="col-lg-6 col-md-12 col-12">
                         <div class="product-info">
                             <h2 class="title">{{ $product->name }}</h2>
-                            <p class="category"><i class="lni lni-tag"></i> Drones:<a href="javascript:void(0)">Action
-                                    cameras</a></p>
-                                    <h3 class="price">{{ $product->price_formatted }}
-                                        @if ($product->compare_price)
-                                        <span>{{ $product->compare_price_formatted }}</span>
-                                        @endif
-                                    </h3>
-                            <p class="info-text">{{$product->short_description}}</p>
+                            <p class="category"><i class="lni lni-tag"></i> Drones:<a href="javascript:void(0)">{{$product->category->name}}</a></p>
+                            <h3 class="price">{{ $product->price_formatted }}
+                                @if ($product->compare_price)
+                                    <span>{{ $product->compare_price_formatted }}</span>
+                            </h3>
+                            @endif
+                            <p class="info-text">{{ $product->short_description }}</p>
                             <div class="row">
                                 <div class="col-lg-4 col-md-4 col-12">
                                     <div class="form-group color-option">
@@ -106,7 +104,15 @@
                         <div class="col-lg-6 col-12">
                             <div class="info-body custom-responsive-margin">
                                 <h4>Details</h4>
-                                <p>{{$product->description}}
+                                <p>{{ $product->description }}</p>
+                                <h4>Features</h4>
+                                <ul class="features">
+                                    <li>Capture 4K30 Video and 12MP Photos</li>
+                                    <li>Game-Style Controller with Touchscreen</li>
+                                    <li>View Live Camera Feed</li>
+                                    <li>Full Control of HERO6 Black</li>
+                                    <li>Use App for Dedicated Camera Operation</li>
+                                </ul>
                             </div>
                         </div>
                         <div class="col-lg-6 col-12">
@@ -252,6 +258,16 @@
                     </div>
                 </div>
             </div>
+            <div>
+                <h2>Similar Products</h2>
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-12">
+                        @foreach ($product->category->products()->where('id', '<>', $product->id)->orderBy('price')->get() as $similar_product)
+                            <x-product-card :product="$similar_product" />
+                    </div>
+                    @endforeach
+                </div>
+            </div>
         </div>
     </section>
     <!-- End Item Details -->
@@ -312,5 +328,4 @@
         </div>
     </div>
     <!-- End Review Modal -->
-
 </x-shop-layout>

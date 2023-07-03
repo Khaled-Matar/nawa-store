@@ -21,8 +21,17 @@ class CategoryRequest extends FormRequest
      */
     public function rules(): array
     {
+        $category = $this->route('category', 0);
         return [
                 'name' => 'required|max:255|min:3',
+                // 'image' => 'nullable|image',   // 500KB  // 1024KB = 1MB
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'required' => ':attribute field is required!!',           // :attribute = field name
         ];
     }
 }

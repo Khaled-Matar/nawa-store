@@ -29,7 +29,6 @@ class ProductRequest extends FormRequest
         return [
             'name' => 'required|max:255|min:3',
             'slug' => "required|unique:products,slug,{$id}",
-            // 'slug' => "required|unique:products,slug,{$id}",
             'category_id' => 'nullable|int|exists:categories,id',
             'description' => 'nullable|string',
             'short_description' => 'string|max:500',
@@ -37,7 +36,7 @@ class ProductRequest extends FormRequest
             'compare_price' => 'nullable|numeric|min:0|gt:price',       //gt = greater than  // gte = greater than or equal =
             'image' => 'nullable|image|dimensions:min_width=100,min_height=100,|max:500',   // 500KB  // 1024KB = 1MB
             'status' => 'required|in:active,draft,archived',
-            // 'image' => 'file|mimetypes:image/png,image/jpg,image/jpeg,image/gif',   /// more secure than mimes and it used for imaes/files/videos
+            // 'image' => 'file|mimetypes:image/png,image/jpg,image/jpeg,image/gif',   /// more secure than mimes and it used for images/files/videos
             'gallery' => 'nullable|array',
             'gallery.*' => 'image||dimensions:min_width=100,min_height=100,|max:1024',        
         ];

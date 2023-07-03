@@ -1,83 +1,7 @@
 <x-shop-layout title="Home" :show_breadcrumb="false">
 
     <!-- Start Hero Area -->
-    <section class="hero-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-12 custom-padding-right">
-                    <div class="slider-head">
-                        <!-- Start Hero Slider -->
-                        <div class="hero-slider">
-                            <!-- Start Single Slider -->
-                            <div class="single-slider"
-                                style="background-image: url(https://via.placeholder.com/800x500);">
-                                <div class="content">
-                                    <h2><span>No restocking fee ($35 savings)</span>
-                                        M75 Sport Watch
-                                    </h2>
-                                    <p>Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor incididunt ut
-                                        labore dolore magna aliqua.</p>
-                                    <h3><span>Now Only</span> $320.99</h3>
-                                    <div class="button">
-                                        <a href="product-grids.html" class="btn">Shop Now</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Single Slider -->
-                            <!-- Start Single Slider -->
-                            <div class="single-slider"
-                                style="background-image: url(https://via.placeholder.com/800x500);">
-                                <div class="content">
-                                    <h2><span>Big Sale Offer</span>
-                                        Get the Best Deal on CCTV Camera
-                                    </h2>
-                                    <p>Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor incididunt ut
-                                        labore dolore magna aliqua.</p>
-                                    <h3><span>Combo Only:</span> $590.00</h3>
-                                    <div class="button">
-                                        <a href="product-grids.html" class="btn">Shop Now</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Single Slider -->
-                        </div>
-                        <!-- End Hero Slider -->
-                    </div>
-                </div>
-                <div class="col-lg-4 col-12">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-6 col-12 md-custom-padding">
-                            <!-- Start Small Banner -->
-                            <div class="hero-small-banner"
-                                style="background-image: url('https://via.placeholder.com/370x250');">
-                                <div class="content">
-                                    <h2>
-                                        <span>New line required</span>
-                                        iPhone 12 Pro Max
-                                    </h2>
-                                    <h3>$259.99</h3>
-                                </div>
-                            </div>
-                            <!-- End Small Banner -->
-                        </div>
-                        <div class="col-lg-12 col-md-6 col-12">
-                            <!-- Start Small Banner -->
-                            <div class="hero-small-banner style2">
-                                <div class="content">
-                                    <h2>Weekly Sale!</h2>
-                                    <p>Saving up to 50% off all online store items this week.</p>
-                                    <div class="button">
-                                        <a class="btn" href="product-grids.html">Shop Now</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Start Small Banner -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <x-first-products title=""  count="1" /> 
     <!-- End Hero Area -->
 
     <!-- Start Featured Categories Area -->
@@ -201,217 +125,22 @@
     <!-- End Features Area -->
 
     <!-- Start Trending Product Area -->
-    <x-trending-products  title="New Arrivals" count="8" />  {{-- giving value to variabels  --}}
+    <x-trending-products  title="New Arrivals" count="4" />  {{-- giving value to variabels  --}}
     <!-- End Trending Product Area -->
 
     <!-- Start Banner Area -->
     <section class="banner section">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-12">
-                    <div class="single-banner" style="background-image:url('https://via.placeholder.com/620x340')">
-                        <div class="content">
-                            <h2>Smart Watch 2.0</h2>
-                            <p>Space Gray Aluminum Case with <br>Black/Volt Real Sport Band </p>
-                            <div class="button">
-                                <a href="product-grids.html" class="btn">View Details</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-12">
-                    <div class="single-banner custom-responsive-margin"
-                        style="background-image:url('https://via.placeholder.com/620x340')">
-                        <div class="content">
-                            <h2>Smart Headphone</h2>
-                            <p>Lorem ipsum dolor sit amet, <br>eiusmod tempor
-                                incididunt ut labore.</p>
-                            <div class="button">
-                                <a href="product-grids.html" class="btn">Shop Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <x-smart-products  title="" count="2" /> 
             </div>
         </div>
     </section>
     <!-- End Banner Area -->
 
     <!-- Start Special Offer -->
-    <section class="special-offer section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-title">
-                        <h2>Special Offer</h2>
-                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have
-                            suffered alteration in some form.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-8 col-md-12 col-12">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-4 col-12">
-                            <!-- Start Single Product -->
-                            <div class="single-product">
-                                <div class="product-image">
-                                    <img src="https://via.placeholder.com/335x335" alt="#">
-                                    <div class="button">
-                                        <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
-                                            Add to
-                                            Cart</a>
-                                    </div>
-                                </div>
-                                <div class="product-info">
-                                    <span class="category">Camera</span>
-                                    <h4 class="title">
-                                        <a href="product-grids.html">WiFi Security Camera</a>
-                                    </h4>
-                                    <ul class="review">
-                                        <li><i class="lni lni-star-filled"></i></li>
-                                        <li><i class="lni lni-star-filled"></i></li>
-                                        <li><i class="lni lni-star-filled"></i></li>
-                                        <li><i class="lni lni-star-filled"></i></li>
-                                        <li><i class="lni lni-star-filled"></i></li>
-                                        <li><span>5.0 Review(s)</span></li>
-                                    </ul>
-                                    <div class="price">
-                                        <span>$399.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Single Product -->
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-12">
-                            <!-- Start Single Product -->
-                            <div class="single-product">
-                                <div class="product-image">
-                                    <img src="https://via.placeholder.com/335x335" alt="#">
-                                    <div class="button">
-                                        <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
-                                            Add to
-                                            Cart</a>
-                                    </div>
-                                </div>
-                                <div class="product-info">
-                                    <span class="category">Laptop</span>
-                                    <h4 class="title">
-                                        <a href="product-grids.html">Apple MacBook Air</a>
-                                    </h4>
-                                    <ul class="review">
-                                        <li><i class="lni lni-star-filled"></i></li>
-                                        <li><i class="lni lni-star-filled"></i></li>
-                                        <li><i class="lni lni-star-filled"></i></li>
-                                        <li><i class="lni lni-star-filled"></i></li>
-                                        <li><i class="lni lni-star-filled"></i></li>
-                                        <li><span>5.0 Review(s)</span></li>
-                                    </ul>
-                                    <div class="price">
-                                        <span>$899.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Single Product -->
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-12">
-                            <!-- Start Single Product -->
-                            <div class="single-product">
-                                <div class="product-image">
-                                    <img src="https://via.placeholder.com/335x335" alt="#">
-                                    <div class="button">
-                                        <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
-                                            Add to
-                                            Cart</a>
-                                    </div>
-                                </div>
-                                <div class="product-info">
-                                    <span class="category">Speaker</span>
-                                    <h4 class="title">
-                                        <a href="product-grids.html">Bluetooth Speaker</a>
-                                    </h4>
-                                    <ul class="review">
-                                        <li><i class="lni lni-star-filled"></i></li>
-                                        <li><i class="lni lni-star-filled"></i></li>
-                                        <li><i class="lni lni-star-filled"></i></li>
-                                        <li><i class="lni lni-star-filled"></i></li>
-                                        <li><i class="lni lni-star"></i></li>
-                                        <li><span>4.0 Review(s)</span></li>
-                                    </ul>
-                                    <div class="price">
-                                        <span>$70.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Single Product -->
-                        </div>
-                    </div>
-                    <!-- Start Banner -->
-                    <div class="single-banner right"
-                        style="background-image:url('https://via.placeholder.com/730x310');margin-top: 30px;">
-                        <div class="content">
-                            <h2>Samsung Notebook 9 </h2>
-                            <p>Lorem ipsum dolor sit amet, <br>eiusmod tempor
-                                incididunt ut labore.</p>
-                            <div class="price">
-                                <span>$590.00</span>
-                            </div>
-                            <div class="button">
-                                <a href="product-grids.html" class="btn">Shop Now</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Banner -->
-                </div>
-                <div class="col-lg-4 col-md-12 col-12">
-                    <div class="offer-content">
-                        <div class="image">
-                            <img src="https://via.placeholder.com/510x600" alt="#">
-                            <span class="sale-tag">-50%</span>
-                        </div>
-                        <div class="text">
-                            <h2><a href="product-grids.html">Bluetooth Headphone</a></h2>
-                            <ul class="review">
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><span>5.0 Review(s)</span></li>
-                            </ul>
-                            <div class="price">
-                                <span>$200.00</span>
-                                <span class="discount-price">$400.00</span>
-                            </div>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry incididunt ut
-                                eiusmod tempor labores.</p>
-                        </div>
-                        <div class="box-head">
-                            <div class="box">
-                                <h1 id="days">000</h1>
-                                <h2 id="daystxt">Days</h2>
-                            </div>
-                            <div class="box">
-                                <h1 id="hours">00</h1>
-                                <h2 id="hourstxt">Hours</h2>
-                            </div>
-                            <div class="box">
-                                <h1 id="minutes">00</h1>
-                                <h2 id="minutestxt">Minutes</h2>
-                            </div>
-                            <div class="box">
-                                <h1 id="seconds">00</h1>
-                                <h2 id="secondstxt">Secondes</h2>
-                            </div>
-                        </div>
-                        <div style="background: rgb(204, 24, 24);" class="alert">
-                            <h1 style="padding: 50px 80px;color: white;">We are sorry, Event ended ! </h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <x-smart  title="Special Offer"/> 
+
     <!-- End Special Offer -->
 
     <!-- Start Home Product List -->

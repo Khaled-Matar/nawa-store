@@ -9,8 +9,7 @@
     </div>
 @endif
 <div class="form-floating mb-3">
-    <x-form.input label="Category Name" id="name" name="name" value="{{ $category->name }}"/> 
-    <x-form.image label="Category Image" id="image" name="image" value="{{ $category->image_url }}" />
-  
+    <x-form.input label="Category Name" id="name" name="name" value="{{ $category->name }}" />
+    <x-form.image label="Category Image" id="image" enctype="multipart/form-data" name="image" value="{{ $category->image_url }}" />
 </div>
 <button type="submit" class="btn btn-primary">save</button>

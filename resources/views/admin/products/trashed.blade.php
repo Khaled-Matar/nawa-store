@@ -3,7 +3,7 @@
 <header class="mb-4 d-flex">
     <h2 class="mb-4 fs-3">{{ ('Deleted Products')}}</h2>
     <div class="ml-auto">
-        <a href="{{ route('products.index') }}" class="btn btn-sm btn-primary"> View Product</a>
+        <a href="{{ route('products.index') }}" class="btn btn-sm btn-primary"> View Products</a>
     </div>
 </header>
     <table class="table">

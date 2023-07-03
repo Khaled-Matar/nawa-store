@@ -20,10 +20,10 @@ class ProductsController extends Controller
         ->where('slug','=', $slug)
         ->firstOrFail();
 
-        $gallery = ProductImage::where('product_id', '=', $product->id)->get();
+        // $gallery = ProductImage::where('product_id', '=', $product->id)->get();
         return view('shop.products.show', [
             'product' => $product,
-            'gallery' => $gallery,
+            // 'gallery' => $gallery,
         ]); 
     }
 

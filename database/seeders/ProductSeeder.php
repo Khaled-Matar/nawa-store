@@ -13,20 +13,21 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        
-            DB::table('products')->insert([
-                'name' => 'product 1',
-                'slug' => 'jdgjksdgd',
-                'category_id' => '1',
-                'description' => 'sdygfyshdghghbdshg',
-                'short_description' => 'sdsdg',
-                'price' => '12.2',
-                'compare_price' => '12',
-                'image' => 'image1',
-                'quantity' => '15',
-                'status' => 'active', 
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+        // for ($i = 1; $i <= 10; $i++) {
+        //     DB::table('products')->insert([
+        //         'name' => 'product 1',
+        //         'slug' => 'jdgjksdgd' .$i,
+        //         'category_id' => '1',
+        //         'description' => 'sdygfyshdghghbdshg',
+        //         'short_description' => 'sdsdg',
+        //         'price' => '12.2',
+        //         'compare_price' => '12',
+        //         'image' => 'image1',
+        //         'quantity' => '15',
+        //         'status' => 'active',
+        //         'created_at' => now(),
+        //         'updated_at' => now(),
+        //     ]);
+        // }
     }
 }
