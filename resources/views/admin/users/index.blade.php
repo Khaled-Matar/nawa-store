@@ -25,7 +25,6 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Password</th>
                 <th>Change Password</th>
                 <th>Delete</th>
             </tr>
@@ -36,7 +35,6 @@
                     <tr>
                         <td>{{ $user->id }} </td>
                         <td>{{ $user->name }} </td>
-                        <td>{{ $user->password }}</td>
                         <td><a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-outline-dark"><i
                                     class="far fa-edit"></i> Edit</a></td>
                         <td>

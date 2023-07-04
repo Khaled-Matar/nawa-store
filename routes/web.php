@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Console\View\Components\Confirm;
 use Illuminate\Support\Facades\Route;
 
 /*

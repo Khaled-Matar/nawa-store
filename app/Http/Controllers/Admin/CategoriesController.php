@@ -18,7 +18,7 @@ class CategoriesController extends Controller
         $categories = Category::select([
             'categories.*',
         ])->simplePaginate(10);
-         // 10 categories at 1 page  
+        // 10 categories at 1 page  
         return view('admin.categories.index', [
             'title' => 'Categories List',
             'categories' => $categories,

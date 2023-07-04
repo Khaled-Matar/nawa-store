@@ -12,8 +12,12 @@ class Category extends Model
     use HasFactory, SoftDeletes;
     protected $fillable = [
         'name', 'image',
-        // other fillable fields go here
     ];
+    public function products()
+    {
+        // return $this->hasMany(Product::class);           // the two are true because it takes the value by default
+        return $this->hasMany(Product::class, 'category_id');
+    }
 
     // Attribute Accessors: image_url | $product->image_url
     public function getImageUrlAttribute()

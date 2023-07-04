@@ -95,9 +95,8 @@ class Product extends Model
     {
         if ($this->image) {
             return Storage::disk('public')->url($this->image);
-        } else {
-            return 'https://placehold.co/60x60?text=No+Image';
         }
+        return 'https://placehold.co/60x60?text=No+Image';
     }
 
     public function getNameAttribute($value)

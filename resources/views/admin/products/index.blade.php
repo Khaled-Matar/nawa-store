@@ -52,8 +52,6 @@
                 <th>Price</th>
                 <th>Compare Price</th>
                 <th>Status</th>
-                <th>Products Count</th>
-                <th>Products Avg Price</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -71,10 +69,8 @@
                         <td>{{ $product->name }} </td>
                         <td>{{ $product->category_name }} </td>
                         <td>{{ $product->price_formatted }} </td>
-                        <td>{{ $product->compare_price }} </td>
+                        <td>{{ $product->compare_price_formatted }} </td>
                         <td>{{ $product->status }} </td>
-                        <td>{{ $category->products_count }}</td>
-                        <td>{{ $category->products_avg_price }}</td>
                         <td><a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-outline-dark">
                                 <i class="far fa-edit"></i>Edit</a></td>
                         <td>

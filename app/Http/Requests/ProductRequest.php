@@ -34,7 +34,7 @@ class ProductRequest extends FormRequest
             'short_description' => 'string|max:500',
             'price' => 'required|numeric|min:0',
             'compare_price' => 'nullable|numeric|min:0|gt:price',       //gt = greater than  // gte = greater than or equal =
-            'image' => 'nullable|image|dimensions:min_width=100,min_height=100,|max:500',   // 500KB  // 1024KB = 1MB
+            'image' => 'nullable|image|dimensions:min_width=50,min_height=50,|max:500',   // 500KB  // 1024KB = 1MB
             'status' => 'required|in:active,draft,archived',
             // 'image' => 'file|mimetypes:image/png,image/jpg,image/jpeg,image/gif',   /// more secure than mimes and it used for images/files/videos
             'gallery' => 'nullable|array',

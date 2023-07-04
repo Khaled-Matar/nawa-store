@@ -21,11 +21,10 @@ class CategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        $category = $this->route('category', 0);
         return [
                 'name' => 'required|max:255|min:3',
-                // 'image' => 'nullable|image',   // 500KB  // 1024KB = 1MB
-        ];
+                'image' => 'nullable|image|dimensions:min_width=50,min_height=50,|max:500',   // 500KB  // 1024KB = 1MB
+            ];
     }
 
     public function messages(): array
