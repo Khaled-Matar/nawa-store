@@ -47,6 +47,20 @@ class Product extends Model
         return $this->hasMany(ProductImage::class);
     }
 
+    public function cart()
+    {
+        return $this->belongsToMany(
+            User::class,     // Related model (User)
+            'carts',            // Pivot table(default=product_user)
+            'product_id',       // FK related model in pivot table
+            'user_id',          // FK current model in pivot table
+            'id',               // PK current user
+            'id',               // PK related model
+        )
+        ->withPivot(['quantity'])
+        ->withTimestamps()
+        ->using(Cart::class);
+    }
 
     public function scopeActive(Builder $query)
     {
@@ -115,4 +129,5 @@ class Product extends Model
         $formatter = new NumberFormatter(Config('app.locale'), NumberFormatter::CURRENCY);
         return $formatter->formatCurrency($this->price, 'USD');
     }
+
 }
