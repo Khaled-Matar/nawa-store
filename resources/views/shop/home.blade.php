@@ -1,7 +1,7 @@
 <x-shop-layout title="Home" :show_breadcrumb="false">
 
     <!-- Start Hero Area -->
-    <x-first-products title=""  count="1" /> 
+    <x-first-products title=""  count="1" />
     <!-- End Hero Area -->
 
     <!-- Start Featured Categories Area -->
@@ -22,11 +22,11 @@
                     <div class="single-category">
                         <h3 class="heading">TV & Audios</h3>
                         <ul>
-                            <li><a href="product-grids.html">Smart Television</a></li>
-                            <li><a href="product-grids.html">QLED TV</a></li>
-                            <li><a href="product-grids.html">Audios</a></li>
-                            <li><a href="product-grids.html">Headphones</a></li>
-                            <li><a href="product-grids.html">View All</a></li>
+                            <li><a href="{{route('grids')}}">Smart Television</a></li>
+                            <li><a href="{{route('grids')}}">QLED TV</a></li>
+                            <li><a href="{{route('grids')}}">Audios</a></li>
+                            <li><a href="{{route('grids')}}">Headphones</a></li>
+                            <li><a href="{{route('grids')}}">View All</a></li>
                         </ul>
                         <div class="images">
                             <img src="https://via.placeholder.com/180x180" alt="#">
@@ -39,11 +39,11 @@
                     <div class="single-category">
                         <h3 class="heading">Desktop & Laptop</h3>
                         <ul>
-                            <li><a href="product-grids.html">Smart Television</a></li>
-                            <li><a href="product-grids.html">QLED TV</a></li>
-                            <li><a href="product-grids.html">Audios</a></li>
-                            <li><a href="product-grids.html">Headphones</a></li>
-                            <li><a href="product-grids.html">View All</a></li>
+                            <li><a href="{{route('grids')}}">Smart Television</a></li>
+                            <li><a href="{{route('grids')}}">QLED TV</a></li>
+                            <li><a href="{{route('grids')}}">Audios</a></li>
+                            <li><a href="{{route('grids')}}">Headphones</a></li>
+                            <li><a href="{{route('grids')}}">View All</a></li>
                         </ul>
                         <div class="images">
                             <img src="https://via.placeholder.com/180x180" alt="#">
@@ -56,11 +56,11 @@
                     <div class="single-category">
                         <h3 class="heading">Cctv Camera</h3>
                         <ul>
-                            <li><a href="product-grids.html">Smart Television</a></li>
-                            <li><a href="product-grids.html">QLED TV</a></li>
-                            <li><a href="product-grids.html">Audios</a></li>
-                            <li><a href="product-grids.html">Headphones</a></li>
-                            <li><a href="product-grids.html">View All</a></li>
+                            <li><a href="{{route('grids')}}">Smart Television</a></li>
+                            <li><a href="{{route('grids')}}">QLED TV</a></li>
+                            <li><a href="{{route('grids')}}">Audios</a></li>
+                            <li><a href="{{route('grids')}}">Headphones</a></li>
+                            <li><a href="{{route('grids')}}">View All</a></li>
                         </ul>
                         <div class="images">
                             <img src="https://via.placeholder.com/180x180" alt="#">
@@ -73,11 +73,11 @@
                     <div class="single-category">
                         <h3 class="heading">Dslr Camera</h3>
                         <ul>
-                            <li><a href="product-grids.html">Smart Television</a></li>
-                            <li><a href="product-grids.html">QLED TV</a></li>
-                            <li><a href="product-grids.html">Audios</a></li>
-                            <li><a href="product-grids.html">Headphones</a></li>
-                            <li><a href="product-grids.html">View All</a></li>
+                            <li><a href="{{route('grids')}}">Smart Television</a></li>
+                            <li><a href="{{route('grids')}}">QLED TV</a></li>
+                            <li><a href="{{route('grids')}}">Audios</a></li>
+                            <li><a href="{{route('grids')}}">Headphones</a></li>
+                            <li><a href="{{route('grids')}}">View All</a></li>
                         </ul>
                         <div class="images">
                             <img src="https://via.placeholder.com/180x180" alt="#">
@@ -90,11 +90,11 @@
                     <div class="single-category">
                         <h3 class="heading">Smart Phones</h3>
                         <ul>
-                            <li><a href="product-grids.html">Smart Television</a></li>
-                            <li><a href="product-grids.html">QLED TV</a></li>
-                            <li><a href="product-grids.html">Audios</a></li>
-                            <li><a href="product-grids.html">Headphones</a></li>
-                            <li><a href="product-grids.html">View All</a></li>
+                            <li><a href="{{route('grids')}}">Smart Television</a></li>
+                            <li><a href="{{route('grids')}}">QLED TV</a></li>
+                            <li><a href="{{route('grids')}}">Audios</a></li>
+                            <li><a href="{{route('grids')}}">Headphones</a></li>
+                            <li><a href="{{route('grids')}}">View All</a></li>
                         </ul>
                         <div class="images">
                             <img src="https://via.placeholder.com/180x180" alt="#">
@@ -107,11 +107,11 @@
                     <div class="single-category">
                         <h3 class="heading">Game Console</h3>
                         <ul>
-                            <li><a href="product-grids.html">Smart Television</a></li>
-                            <li><a href="product-grids.html">QLED TV</a></li>
-                            <li><a href="product-grids.html">Audios</a></li>
-                            <li><a href="product-grids.html">Headphones</a></li>
-                            <li><a href="product-grids.html">View All</a></li>
+                            <li><a href="{{route('grids')}}">Smart Television</a></li>
+                            <li><a href="{{route('grids')}}">QLED TV</a></li>
+                            <li><a href="{{route('grids')}}">Audios</a></li>
+                            <li><a href="{{route('grids')}}">Headphones</a></li>
+                            <li><a href="{{route('grids')}}">View All</a></li>
                         </ul>
                         <div class="images">
                             <img src="https://via.placeholder.com/180x180" alt="#">
@@ -132,14 +132,14 @@
     <section class="banner section">
         <div class="container">
             <div class="row">
-                <x-smart-products  title="" count="2" /> 
+                <x-smart-products  title="" count="2" />
             </div>
         </div>
     </section>
     <!-- End Banner Area -->
 
     <!-- Start Special Offer -->
-    <x-smart  title="Special Offer"/> 
+    <x-smart  title="Special Offer"/>
 
     <!-- End Special Offer -->
 
@@ -152,12 +152,12 @@
                     <!-- Start Single List -->
                     <div class="single-list">
                         <div class="list-image">
-                            <a href="product-grids.html"><img src="https://via.placeholder.com/100x100"
+                            <a href="{{route('grids')}}"><img src="https://via.placeholder.com/100x100"
                                     alt="#"></a>
                         </div>
                         <div class="list-info">
                             <h3>
-                                <a href="product-grids.html">GoPro Hero4 Silver</a>
+                                <a href="{{route('grids')}}">GoPro Hero4 Silver</a>
                             </h3>
                             <span>$287.99</span>
                         </div>
@@ -166,12 +166,12 @@
                     <!-- Start Single List -->
                     <div class="single-list">
                         <div class="list-image">
-                            <a href="product-grids.html"><img src="https://via.placeholder.com/100x100"
+                            <a href="{{route('grids')}}"><img src="https://via.placeholder.com/100x100"
                                     alt="#"></a>
                         </div>
                         <div class="list-info">
                             <h3>
-                                <a href="product-grids.html">Puro Sound Labs BT2200</a>
+                                <a href="{{route('grids')}}">Puro Sound Labs BT2200</a>
                             </h3>
                             <span>$95.00</span>
                         </div>
@@ -180,12 +180,12 @@
                     <!-- Start Single List -->
                     <div class="single-list">
                         <div class="list-image">
-                            <a href="product-grids.html"><img src="https://via.placeholder.com/100x100"
+                            <a href="{{route('grids')}}"><img src="https://via.placeholder.com/100x100"
                                     alt="#"></a>
                         </div>
                         <div class="list-info">
                             <h3>
-                                <a href="product-grids.html">HP OfficeJet Pro 8710</a>
+                                <a href="{{route('grids')}}">HP OfficeJet Pro 8710</a>
                             </h3>
                             <span>$120.00</span>
                         </div>
@@ -197,12 +197,12 @@
                     <!-- Start Single List -->
                     <div class="single-list">
                         <div class="list-image">
-                            <a href="product-grids.html"><img src="https://via.placeholder.com/100x100"
+                            <a href="{{route('grids')}}"><img src="https://via.placeholder.com/100x100"
                                     alt="#"></a>
                         </div>
                         <div class="list-info">
                             <h3>
-                                <a href="product-grids.html">iPhone X 256 GB Space Gray</a>
+                                <a href="{{route('grids')}}">iPhone X 256 GB Space Gray</a>
                             </h3>
                             <span>$1150.00</span>
                         </div>
@@ -211,12 +211,12 @@
                     <!-- Start Single List -->
                     <div class="single-list">
                         <div class="list-image">
-                            <a href="product-grids.html"><img src="https://via.placeholder.com/100x100"
+                            <a href="{{route('grids')}}"><img src="https://via.placeholder.com/100x100"
                                     alt="#"></a>
                         </div>
                         <div class="list-info">
                             <h3>
-                                <a href="product-grids.html">Canon EOS M50 Mirrorless Camera</a>
+                                <a href="{{route('grids')}}">Canon EOS M50 Mirrorless Camera</a>
                             </h3>
                             <span>$950.00</span>
                         </div>
@@ -225,12 +225,12 @@
                     <!-- Start Single List -->
                     <div class="single-list">
                         <div class="list-image">
-                            <a href="product-grids.html"><img src="https://via.placeholder.com/100x100"
+                            <a href="{{route('grids')}}"><img src="https://via.placeholder.com/100x100"
                                     alt="#"></a>
                         </div>
                         <div class="list-info">
                             <h3>
-                                <a href="product-grids.html">Microsoft Xbox One S</a>
+                                <a href="{{route('grids')}}">Microsoft Xbox One S</a>
                             </h3>
                             <span>$298.00</span>
                         </div>
@@ -242,12 +242,12 @@
                     <!-- Start Single List -->
                     <div class="single-list">
                         <div class="list-image">
-                            <a href="product-grids.html"><img src="https://via.placeholder.com/100x100"
+                            <a href="{{route('grids')}}"><img src="https://via.placeholder.com/100x100"
                                     alt="#"></a>
                         </div>
                         <div class="list-info">
                             <h3>
-                                <a href="product-grids.html">Samsung Gear 360 VR Camera</a>
+                                <a href="{{route('grids')}}">Samsung Gear 360 VR Camera</a>
                             </h3>
                             <span>$68.00</span>
                         </div>
@@ -256,12 +256,12 @@
                     <!-- Start Single List -->
                     <div class="single-list">
                         <div class="list-image">
-                            <a href="product-grids.html"><img src="https://via.placeholder.com/100x100"
+                            <a href="{{route('grids')}}"><img src="https://via.placeholder.com/100x100"
                                     alt="#"></a>
                         </div>
                         <div class="list-info">
                             <h3>
-                                <a href="product-grids.html">Samsung Galaxy S9+ 64 GB</a>
+                                <a href="{{route('grids')}}">Samsung Galaxy S9+ 64 GB</a>
                             </h3>
                             <span>$840.00</span>
                         </div>
@@ -270,12 +270,12 @@
                     <!-- Start Single List -->
                     <div class="single-list">
                         <div class="list-image">
-                            <a href="product-grids.html"><img src="https://via.placeholder.com/100x100"
+                            <a href="{{route('grids')}}"><img src="https://via.placeholder.com/100x100"
                                     alt="#"></a>
                         </div>
                         <div class="list-info">
                             <h3>
-                                <a href="product-grids.html">Zeus Bluetooth Headphones</a>
+                                <a href="{{route('grids')}}">Zeus Bluetooth Headphones</a>
                             </h3>
                             <span>$28.00</span>
                         </div>
@@ -466,7 +466,7 @@
     <script src="assets/js/glightbox.min.js"></script>
     <script src="assets/js/main.js"></script>
     <script type="text/javascript">
-        //========= Hero Slider 
+        //========= Hero Slider
         tns({
             container: '.hero-slider',
             slideBy: 'page',

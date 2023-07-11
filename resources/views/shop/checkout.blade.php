@@ -5,8 +5,22 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
+                    @if (session()->has('error'))
+                        <div class="alert alert-danger">
+                            {{ session()->get('error') }}
+                        </div>
+                    @endif
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <div class="checkout-steps-form-style-1">
-                        <form action="{{ route('checkout.store') }}" method="POST">
+                        <form action="{{ route('checkout') }}" method="POST">
                             @csrf
                             <ul id="accordionExample">
                                 <li>
@@ -73,7 +87,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="single-form form-default">
-                                                    <label>Post Code</label>
+                                                    <label>Postal Code</label>
                                                     <div class="form-input form">
                                                         <input type="text" name="customer_postal_code"
                                                             value="{{ old('customer_postal_code') }}"
@@ -106,76 +120,17 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12">
-                                                <div class="single-checkbox checkbox-style-3">
-                                                    <input type="checkbox" id="checkbox-3">
-                                                    <label for="checkbox-3"><span></span></label>
-                                                    <p>My delivery and mailing addresses are the same.</p>
-                                                </div>
-                                            </div>
+
                                             <div class="col-md-12">
                                                 <div class="single-form button">
-                                                    <button class="btn" data-bs-toggle="collapse"
-                                                        data-bs-target="#collapseFour" type="submit"
-                                                        aria-expanded="false" aria-controls="collapseFour">next
-                                                        step</button>
+                                                    <button class="btn" type="submit">Plcae order</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </section>
                                 </li>
+                            </ul>
                         </form>
-                        <li>
-                            <h6 class="title collapsed" data-bs-toggle="collapse" data-bs-target="#collapsefive"
-                                aria-expanded="false" aria-controls="collapsefive">Payment Info</h6>
-                            <section class="checkout-steps-form-content collapse" id="collapsefive"
-                                aria-labelledby="headingFive" data-bs-parent="#accordionExample">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="checkout-payment-form">
-                                            <div class="single-form form-default">
-                                                <label>Cardholder Name</label>
-                                                <div class="form-input form">
-                                                    <input type="text" placeholder="Cardholder Name">
-                                                </div>
-                                            </div>
-                                            <div class="single-form form-default">
-                                                <label>Card Number</label>
-                                                <div class="form-input form">
-                                                    <input id="credit-input" type="text"
-                                                        placeholder="0000 0000 0000 0000">
-                                                    <img src="assets/images/payment/card.png" alt="card">
-                                                </div>
-                                            </div>
-                                            <div class="payment-card-info">
-                                                <div class="single-form form-default mm-yy">
-                                                    <label>Expiration</label>
-                                                    <div class="expiration d-flex">
-                                                        <div class="form-input form">
-                                                            <input type="text" placeholder="MM">
-                                                        </div>
-                                                        <div class="form-input form">
-                                                            <input type="text" placeholder="YYYY">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="single-form form-default">
-                                                    <label>CVC/CVV <span><i
-                                                                class="mdi mdi-alert-circle"></i></span></label>
-                                                    <div class="form-input form">
-                                                        <input type="text" placeholder="***">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="single-form form-default button">
-                                                <button class="btn">pay now</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-                        </li>
-                        </ul>
                     </div>
                 </div>
                 <div class="col-lg-4">

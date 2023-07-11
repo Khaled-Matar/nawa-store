@@ -15,7 +15,7 @@ class Profile extends Model
     }
     protected $fillable = [
 
-        'first_name', 'last_name', 'birthday','gender', 'address', 'city',
+        'first_name', 'last_name', 'street' ,'birthday', 'gender','address', 'city',
          'postal_code', 'province', 'country_code',
     ];
 

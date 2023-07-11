@@ -13,7 +13,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // if($this->app->environment('production')){
+            $this->app->instance('path.public', function(){
+                return base_path('public_html');
+        });
+        // }
     }
 
     /**
@@ -22,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Schema::defaultStringLength(191);
-        Paginator::useBootstrapFive();
+        Paginator::useBootstrapFour();
         // View::share([
         //     'categories' => $categories,
         //     'status_options' => Product::statusOptions(),

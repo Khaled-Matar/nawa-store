@@ -78,7 +78,7 @@
                     <div class="col-lg-4 col-md-4 col-12">
                         <div class="top-middle">
                             <ul class="useful-links">
-                                <li><a href="index.html">Home</a></li>
+                                <li><a href="{{ route('home') }}">Home</a></li>
                                 <li><a href="about-us.html">About Us</a></li>
                                 <li><a href="contact.html">Contact Us</a></li>
                             </ul>
@@ -88,21 +88,29 @@
                         <div class="top-end">
                             @auth
                                 <div class="user">
-                                    <i class="lni lni-user"></i>
-                                    {{ Auth::user()->profile->first_name }}
+                                    <i class="lni lni-user"></i><a href="{{ route('profile.edit') }}">
+                                        {{ Auth::user()->profile->first_name }} {{ Auth::user()->profile->last_name }}
+                                    </a>
                                 </div>
                                 <ul class="user-login">
                                     <li>
                                         <a href="{{ route('profile.edit') }}">Profile</a>
-                                    </li>  
+                                    </li>
+                                    {{-- <li>
+                                        <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                            documnet.getElementBuId('logout.Form').submit()">Logout</a>
+                                    </li> --}}
                                     <li>
-                                        <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                            documnet.getElementBuId('logoutForm').submit()">Logout</a>
+                                        <form action="{{ route('logout') }}" method="post">
+                                            @csrf
+                                            <button type="submit" class="btn btn-sm btn-danger">logout</button>
+                                        </form>
                                     </li>
                                 </ul>
-                                <form action="{{ route('logout') }}" method="POST" style="display: none;">
+                                {{-- <form action="{{ route('logout') }}" method="POST" style="display: none;">
                                     @csrf
-                                </form>
+                                </form> --}}
                             @else
                                 <div class="user">
                                     <i class="lni lni-user"></i>
@@ -130,7 +138,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-3 col-7">
                         <!-- Start Header Logo -->
-                        <a class="navbar-brand" href="index.html">
+                        <a class="navbar-brand" href="{{ route('home') }}">
                             <img src="{{ asset('assets/images/logo/logo.svg') }}" alt="Logo">
                         </a>
                         <!-- End Header Logo -->
@@ -187,45 +195,33 @@
                                     <div class="shopping-item">
                                         <div class="dropdown-cart-header">
                                             <span>2 Items</span>
-                                            <a href="cart.html">View Cart</a>
+                                            <a href="{{ route('cart') }}">View Cart</a>
                                         </div>
                                         <ul class="shopping-list">
-                                            <li>
-                                                <a href="javascript:void(0)" class="remove"
-                                                    title="Remove this item"><i class="lni lni-close"></i></a>
-                                                <div class="cart-img-head">
-                                                    <a class="cart-img" href="product-details.html"><img
-                                                            src="{{ asset('assets/images/header/cart-items/item1.jpg') }}"
-                                                            alt="#"></a>
-                                                </div>
+                                                <li>
+                                                    <a href="javascript:void(0)" class="remove"
+                                                        title="Remove this item"><i class="lni lni-close"></i></a>
+                                                    <div class="cart-img-head">
+                                                        <a class="cart-img" href="product-details.html"><img
+                                                                src="{{ asset('assets/images/header/cart-items/item1.jpg') }}"
+                                                                alt="#"></a>
+                                                    </div>
 
-                                                <div class="content">
-                                                    <h4><a href="product-details.html">
-                                                            Apple Watch Series 6</a></h4>
-                                                    <p class="quantity">1x - <span class="amount">$99.00</span></p>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0)" class="remove"
-                                                    title="Remove this item"><i class="lni lni-close"></i></a>
-                                                <div class="cart-img-head">
-                                                    <a class="cart-img" href="product-details.html"><img
-                                                            src="{{ asset('assets/images/header/cart-items/item2.jpg') }}"
-                                                            alt="#"></a>
-                                                </div>
-                                                <div class="content">
-                                                    <h4><a href="product-details.html">Wi-Fi Smart Camera</a></h4>
-                                                    <p class="quantity">1x - <span class="amount">$35.00</span></p>
-                                                </div>
-                                            </li>
+                                                    <div class="content">
+                                                        <h4><a href="product-details.html">
+                                                                Apple Watch Series 6</a></h4>
+                                                        <p class="quantity">1x - <span class="amount">$99.00</span>
+                                                        </p>
+                                                    </div>
+                                                </li>
                                         </ul>
                                         <div class="bottom">
                                             <div class="total">
                                                 <span>Total</span>
-                                                <span class="total-amount">$134.00</span>
+                                                <span class="total-amount"> $132.44 </span>
                                             </div>
                                             <div class="button">
-                                                <a href="checkout.html" class="btn animate">Checkout</a>
+                                                <a href="{{ 'checkout' }}" class="btn animate">Checkout</a>
                                             </div>
                                         </div>
                                     </div>
@@ -247,31 +243,32 @@
                         <div class="mega-category-menu">
                             <span class="cat-button"><i class="lni lni-menu"></i>All Categories</span>
                             <ul class="sub-category">
-                                <li><a href="product-grids.html">Electronics <i class="lni lni-chevron-right"></i></a>
+                                <li><a href="{{ route('grids') }}">Electronics <i
+                                            class="lni lni-chevron-right"></i></a>
                                     <ul class="inner-sub-category">
-                                        <li><a href="product-grids.html">Digital Cameras</a></li>
-                                        <li><a href="product-grids.html">Camcorders</a></li>
-                                        <li><a href="product-grids.html">Camera Drones</a></li>
-                                        <li><a href="product-grids.html">Smart Watches</a></li>
-                                        <li><a href="product-grids.html">Headphones</a></li>
-                                        <li><a href="product-grids.html">MP3 Players</a></li>
-                                        <li><a href="product-grids.html">Microphones</a></li>
-                                        <li><a href="product-grids.html">Chargers</a></li>
-                                        <li><a href="product-grids.html">Batteries</a></li>
-                                        <li><a href="product-grids.html">Cables & Adapters</a></li>
+                                        <li><a href="{{ route('grids') }}">Digital Cameras</a></li>
+                                        <li><a href="{{ route('grids') }}">Camcorders</a></li>
+                                        <li><a href="{{ route('grids') }}">Camera Drones</a></li>
+                                        <li><a href="{{ route('grids') }}">Smart Watches</a></li>
+                                        <li><a href="{{ route('grids') }}">Headphones</a></li>
+                                        <li><a href="{{ route('grids') }}">MP3 Players</a></li>
+                                        <li><a href="{{ route('grids') }}">Microphones</a></li>
+                                        <li><a href="{{ route('grids') }}">Chargers</a></li>
+                                        <li><a href="{{ route('grids') }}">Batteries</a></li>
+                                        <li><a href="{{ route('grids') }}">Cables & Adapters</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="product-grids.html">accessories</a></li>
-                                <li><a href="product-grids.html">Televisions</a></li>
-                                <li><a href="product-grids.html">best selling</a></li>
-                                <li><a href="product-grids.html">top 100 offer</a></li>
-                                <li><a href="product-grids.html">sunglass</a></li>
-                                <li><a href="product-grids.html">watch</a></li>
-                                <li><a href="product-grids.html">man’s product</a></li>
-                                <li><a href="product-grids.html">Home Audio & Theater</a></li>
-                                <li><a href="product-grids.html">Computers & Tablets </a></li>
-                                <li><a href="product-grids.html">Video Games </a></li>
-                                <li><a href="product-grids.html">Home Appliances </a></li>
+                                <li><a href="{{ route('grids') }}">accessories</a></li>
+                                <li><a href="{{ route('grids') }}">Televisions</a></li>
+                                <li><a href="{{ route('grids') }}">best selling</a></li>
+                                <li><a href="{{ route('grids') }}">top 100 offer</a></li>
+                                <li><a href="{{ route('grids') }}">sunglass</a></li>
+                                <li><a href="{{ route('grids') }}">watch</a></li>
+                                <li><a href="{{ route('grids') }}">man’s product</a></li>
+                                <li><a href="{{ route('grids') }}">Home Audio & Theater</a></li>
+                                <li><a href="{{ route('grids') }}">Computers & Tablets </a></li>
+                                <li><a href="{{ route('grids') }}">Video Games </a></li>
+                                <li><a href="{{ route('grids') }}">Home Appliances </a></li>
                             </ul>
                         </div>
                         <!-- End Mega Category Menu -->
@@ -287,7 +284,7 @@
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul id="nav" class="navbar-nav ms-auto">
                                     <li class="nav-item">
-                                        <a href="index.html" aria-label="Toggle navigation">Home</a>
+                                        <a href="{{ route('home') }}" aria-label="Toggle navigation">Home</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="dd-menu active collapsed" href="javascript:void(0)"
@@ -297,7 +294,7 @@
                                         <ul class="sub-menu collapse" id="submenu-1-2">
                                             <li class="nav-item active"><a href="about-us.html">About Us</a></li>
                                             <li class="nav-item"><a href="faq.html">Faq</a></li>
-                                            <li class="nav-item"><a href="login.html">Login</a></li>
+                                            <li class="nav-item"><a href="{{ route('login') }}">Login</a></li>
                                             <li class="nav-item"><a href="register.html">Register</a></li>
                                             <li class="nav-item"><a href="mail-success.html">Mail Success</a></li>
                                             <li class="nav-item"><a href="404.html">404 Error</a></li>
@@ -309,11 +306,11 @@
                                             aria-controls="navbarSupportedContent" aria-expanded="false"
                                             aria-label="Toggle navigation">Shop</a>
                                         <ul class="sub-menu collapse" id="submenu-1-3">
-                                            <li class="nav-item"><a href="product-grids.html">Shop Grid</a></li>
+                                            <li class="nav-item"><a href="{{ route('grids') }}">Shop Grid</a></li>
                                             <li class="nav-item"><a href="product-list.html">Shop List</a></li>
                                             <li class="nav-item"><a href="product-details.html">shop Single</a></li>
-                                            <li class="nav-item"><a href="cart.html">Cart</a></li>
-                                            <li class="nav-item"><a href="checkout.html">Checkout</a></li>
+                                            <li class="nav-item"><a href="{{ route('cart') }}">Cart</a></li>
+                                            <li class="nav-item"><a href="{{ route('checkout') }}">Checkout</a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item">
@@ -399,7 +396,7 @@
                     <div class="row">
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="footer-logo">
-                                <a href="index.html">
+                                <a href="{{ route('home') }}">
                                     <img src="{{ asset('assets/images/logo/white-logo.svg') }}" alt="#">
                                 </a>
                             </div>
@@ -569,7 +566,7 @@
                     img.style.opacity = 1;
                 });
                 current.src = e.target.src;
-                //adding class 
+                //adding class
                 //current.classList.add("fade-in");
                 //opacity
                 e.target.style.opacity = opacity;

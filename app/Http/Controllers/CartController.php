@@ -19,17 +19,17 @@ class CartController extends Controller
         $cookie_id = $request->cookie('cart_id');
         $cart = Cart::with('product')->where('cookie_id', '=', $cookie_id)->get();
 
-        $total = $cart->sum(function($item){
+        $total = $cart->sum(function ($item) {
             return $item->product->price * $item['quantity'];
         });
-        // foreach ($cart as $item){
-        //     $total += $item->product->price * $item->quantity;
-        // }
+        foreach ($cart as $item) {
+            $total += $item->product->price * $item->quantity;
+        }
         $formatter = new NumberFormatter('en', NumberFormatter::CURRENCY);
 
-        return view('shop.cart',[
+        return view('shop.cart', [
             'cart' => $cart,
-            'total' => $formatter->formatCurrency($total, 'EUR'),
+            'total' => $formatter->formatCurrency($total, 'USD'),
         ]);
     }
     //display all products added by user and also show quantity for each product
@@ -39,22 +39,22 @@ class CartController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'product_id' => ['required','int','exists:products,id'],
-            'quantity' => ['nullable','int', 'min:1', 'max:100'],
+            'product_id' => ['required', 'int', 'exists:products,id'],
+            'quantity' => ['nullable', 'int', 'min:1', 'max:100'],
         ]);
 
         $cookie_id = $request->cookie('cart_id');
-        if(!$cookie_id){
+        if (!$cookie_id) {
             $cookie_id = Str::uuid();
             Cookie::queue('cart_id', $cookie_id, 60 * 24 * 30);
         }
 
         $item = Cart::where('cookie_id', '=', $cookie_id)
-        ->where('product_id', '=', $request->input('product_id'))
-        ->first();
-        if($item){
+            ->where('product_id', '=', $request->input('product_id'))
+            ->first();
+        if ($item) {
             $item->increment('quantity', $request->input('quantity', 1));
-        }else{
+        } else {
             Cart::create([
                 'cookie_id' => $cookie_id,
                 'user_id' => Auth::id(),

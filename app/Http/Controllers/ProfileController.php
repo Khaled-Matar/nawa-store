@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Symfony\Component\Intl\Countries;
 
 class ProfileController extends Controller
 {
@@ -16,9 +17,12 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        // $countries = Countries::getNames('en');
         return view('profile.edit', [
-            'user' => $request->user(),
+            'user' => $request->user,
+            // 'countries' => $countries,
         ]);
+
     }
 
     /**
@@ -36,7 +40,7 @@ class ProfileController extends Controller
         $user->save();
 
         $user->profile->fill($request->validated())->save();
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('home')->with('status', 'profile-updated');
     }
 
     /**
@@ -59,4 +63,34 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+
+    public function change_password(){
+
+    }
+
+    public function update_password(Request $request){
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

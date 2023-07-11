@@ -24,9 +24,17 @@ class Product extends Model
     ];
 
     //////       X العكس         //////////////
-    ////////////    لا تسمح بدخول 
+    ////////////    لا تسمح بدخول
     // protected $guarded = ['id']; // لا تسمح بدخول عنصر ال id
     // protected $guarded = [];    // لا تسمح بدخول كل العناصر
+
+    protected $appends = [
+        'image_url', 'price_formatted', 'compare_price_formatted',
+    ];
+
+    protected $hidden = [
+        'image', 'updated_at', 'deleted_at', 'price', 'compare_price'
+    ];
 
     protected static function booted()
     {
@@ -34,6 +42,11 @@ class Product extends Model
         //     $query->where('user_id', '=', Auth::id());
         // });
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 
     public function category()
     {
@@ -57,9 +70,9 @@ class Product extends Model
             'id',               // PK current user
             'id',               // PK related model
         )
-        ->withPivot(['quantity'])
-        ->withTimestamps()
-        ->using(Cart::class);
+            ->withPivot(['quantity'])
+            ->withTimestamps()
+            ->using(Cart::class);
     }
 
     public function scopeActive(Builder $query)
@@ -129,5 +142,4 @@ class Product extends Model
         $formatter = new NumberFormatter(Config('app.locale'), NumberFormatter::CURRENCY);
         return $formatter->formatCurrency($this->price, 'USD');
     }
-
 }

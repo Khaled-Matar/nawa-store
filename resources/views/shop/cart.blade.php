@@ -29,7 +29,7 @@
                 <!-- End Cart List Title -->
                 <!-- Cart Single List list -->
                 @foreach ($cart as $item)
-                    
+
                 <div class="cart-single-list">
                     <div class="row align-items-center">
                         <div class="col-lg-1 col-md-1 col-12">
@@ -56,7 +56,7 @@
                     </div>
                 </div>
                 @endforeach
-              
+
             </div>
             <div class="row">
                 <div class="col-12">
@@ -84,7 +84,7 @@
                                     </ul>
                                     <div class="button">
                                         <a href="{{route('checkout')}}" class="btn">Checkout</a>
-                                        <a href="product-grids.html" class="btn btn-alt">Continue shopping</a>
+                                        <a href="{{route('grids')}}" class="btn btn-alt">Continue shopping</a>
                                     </div>
                                 </div>
                             </div>

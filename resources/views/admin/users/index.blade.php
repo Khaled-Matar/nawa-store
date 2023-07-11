@@ -3,7 +3,7 @@
     <header class="mb-4 d-flex">
         <h2 class="mb-4 fs-3">{{ $title }}</h2>
         <div class="ml-auto">
-            <a href="{{ route('users.trashed') }}" class="btn btn-sm btn-danger"> <i class="fas fa-trash"> View Trash</i></a>
+            <a href="{{ route('users.create') }}" class="btn btn-sm btn-primary"> + <i class="fas fa-trash"> Create User</i></a>
         </div>
     </header>
     @if (session()->has('success'))

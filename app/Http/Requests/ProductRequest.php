@@ -24,7 +24,7 @@ class ProductRequest extends FormRequest
     {
         // $product = $this->route('product', new Product());
         $product = $this->route('product', 0);
-        $id = $product? $product->id : 0;
+        $id = $product ? $product->id : 0;
 
         return [
             'name' => 'required|max:255|min:3',
@@ -38,7 +38,7 @@ class ProductRequest extends FormRequest
             'status' => 'required|in:active,draft,archived',
             // 'image' => 'file|mimetypes:image/png,image/jpg,image/jpeg,image/gif',   /// more secure than mimes and it used for images/files/videos
             'gallery' => 'nullable|array',
-            'gallery.*' => 'image||dimensions:min_width=100,min_height=100,|max:1024',        
+            'gallery.*' => 'image||dimensions:min_width=100,min_height=100,|max:1024',
         ];
     }
 

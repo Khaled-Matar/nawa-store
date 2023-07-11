@@ -9,7 +9,6 @@ use Illuminate\View\Component;
 class ShopLayout extends Component
 {
     public $title;
-
     public $showBreadcrumb;
 
     /**

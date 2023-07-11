@@ -18,8 +18,14 @@ class ProfileUpdateRequest extends FormRequest
         return [
             'first_name' => ['string', 'max:255'],
             'last_name' => ['string', 'max:255'],
-            'email' => ['email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
             'birthday' => ['date', 'before:today'],
+            // 'email' => ['email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
+            'gender' => 'string|in:active,draft,archived',
+            'street' => ['string', 'max:255'],
+            'city' => ['string', 'max:255'],
+            'province' => ['string', 'max:255'],
+            'postal_code' => ['int', 'max:255'],
+            // 'country_code' => ['string', 'size:2'],
         ];
     }
 }
